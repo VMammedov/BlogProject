@@ -1,0 +1,71 @@
+﻿@model List<Blog>
+
+@{
+    ViewData["Title"] = "BlogReadAll";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<section class="mt-5">
+    <!--/blog-->
+    <div class="container">
+        <div class="row">
+            <!--left-->
+            <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
+                @foreach (var blog in Model)
+                {
+                    <div class="blog-grid-top">
+                        <div class="b-grid-top">
+                            <div class="blog_info_left_grid">
+                                <div>
+                                    <img src="@blog.BlogImage" class="img-fluid" alt="">
+                                </div>
+                            </div>
+                            <div class="blog-info-middle">
+                                <ul>
+                                    <li>
+                                        <a href="#">
+                                            <i class="far fa-calendar-alt"></i> @(((DateTime)blog.BlogCreateDate).ToString("dd-MMMM-yyyy"))
+                                        </a>
+                                    </li>
+                                    <li class="mx-2">
+                                        <a href="#">
+                                            <i class="far fa-thumbs-up"></i> 201 Likes
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#comments">
+                                            <i class="far fa-comment"></i> 15 Comments
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>
+                            <a href="">@blog.BlogTitle</a>
+                        </h3>
+                        <p>
+                            @blog.BlogContent
+                        </p>
+                        <a href="single.html" class="btn btn-primary read-m">Read More</a>
+                    </div>
+                }
+                
+                <partial name="/Views/Comment/AddCommentPartial.cshtml"/>
+
+                @await Component.InvokeAsync("CommentListByBlog", new { id = ViewBag.id })
+                
+            </div>
+
+            <!--//left-->
+
+            <!--right-->
+
+            <partial name="RightSidePartial" />
+
+            <!--//right-->
+        </div>
+    </div>
+</section>
+<!--//main-->

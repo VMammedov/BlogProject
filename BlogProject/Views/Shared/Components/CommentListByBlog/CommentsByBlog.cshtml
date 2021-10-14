@@ -1,0 +1,29 @@
+﻿@model List<Comment>
+
+<div id="comments" class="comment-top">
+    <h4>Comments</h4>
+    @if (Model.Count == 0)
+    {
+        <div class="media">
+            <div class="container">
+                <h5 class="text-muted">Be the first to comment</h5>
+            </div>
+        </div>
+    }
+    else
+    {
+        @foreach (Comment comment in Model)
+        {
+            <div class="media">
+                <img src="~/Template/images/t1.jpg" alt="" class="img-fluid" />
+                <div class="media-body">
+                    <h5 class="mt-0">@comment.CommentUserName</h5>
+                    <p>
+                        @comment.CommentContent
+                    </p>
+                </div>
+            </div>
+        }
+    }
+
+</div>
