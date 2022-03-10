@@ -1,0 +1,26 @@
+﻿<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<div class="tech-btm">
+    <h4>Sign up to our newsletter</h4>
+    <p>Take instantly our blog's notifications about Technology and Programming.</p>
+    <form method="post">
+        <input type="email" id="aaaa" placeholder="Email" required="">
+        <input id="btnsubmit" class="form-control submit_button" type="button" value="Subscribe">
+    </form>
+</div>
+
+<script>
+    $("#btnsubmit").click(() => {
+        $.post("https://localhost:44356/newsletter/SubscribeMail", { a: $("#aaaa").val().toString() });
+    });
+
+    $("#btnsubmit").click(() => {
+        Swal.fire(
+            'You have successfully subscribed!',
+            'Now, you will be able to receive instant news from new blogs on our site!',
+            'success'
+        );
+    });
+    
+</script>

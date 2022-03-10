@@ -13,20 +13,22 @@
     <meta name="keywords" content="Weblog, Blog, My Blog" />
 
     <script>
-		addEventListener("load", function () {
-			setTimeout(hideURLbar, 0);
-		}, false);
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
 
-		function hideURLbar() {
-			window.scrollTo(0, 1);
-		}
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
     </script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link href="~/Template/css/bootstrap.css" rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="~/Template/css/single.css">
     <link href="~/Template/css/style.css" rel='stylesheet' type='text/css' />
     <link href="~/Template/css/fontawesome-all.css" rel="stylesheet">
     <link href="//fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
           rel="stylesheet">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 
 <body>
@@ -91,7 +93,7 @@
     <!--/main-->
 
     @RenderBody()
-
+    
     <!--//main-->
     <!--footer-->
     

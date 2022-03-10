@@ -46,8 +46,8 @@ p.sub {
     resize: none;
 }
 
-.contact_grid_right input[type="submit"] {
-	outline: none;
+.form-button {
+    outline: none;
     padding: 20px 0;
     font-size: 14px;
     color: #fff;
@@ -60,11 +60,11 @@ p.sub {
     -o-transition: 0.5s all;
     -ms-transition: 0.5s all;
     transition: 0.5s all;
-	font-weight:600;
-	cursor: pointer;
+    font-weight: 600;
+    cursor: pointer;
 }
 
-.contact_grid_right input[type="submit"]:hover {
+.form-button:hover {
     background-color: #01cd74;
 }
 

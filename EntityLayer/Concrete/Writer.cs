@@ -15,8 +15,14 @@ namespace EntityLayer.Concrete
         public string WriterName { get; set; }
         public string WriterSurName { get; set; }
         public string WriterMail { get; set; }
-        public byte[] WriterPasswordHash { get; set; }
-        public byte[] WriterPasswordSalt { get; set; }
+        public string WriterImage { get; set; }
+        public string WriterPassword { get; set; }
         public bool WriterStatus { get; set; }
+        public int? CountryID { get; set; }
+        public virtual Country Country { get; set; }
+        public List<Blog> Blogs { get; set; }
+        public List<Notification> Notifications { get; set; }
+        public virtual ICollection<Message> SentMessages { get; set; }
+        public virtual ICollection<Message> ReceivedMessages { get; set; }
     }
 }

@@ -16,3 +16,20 @@ C:\Users\Vusal Mammadli\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.
 C:\Users\Vusal Mammadli\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.0\ref\DataAccessLayer.dll
 C:\Users\Vusal Mammadli\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.pdb
 C:\Users\Vusal Mammadli\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.genruntimeconfig.cache
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\bin\Debug\net5.0\DataAccessLayer.deps.json
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\bin\Debug\net5.0\DataAccessLayer.runtimeconfig.json
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\bin\Debug\net5.0\DataAccessLayer.runtimeconfig.dev.json
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\bin\Debug\net5.0\DataAccessLayer.dll
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\bin\Debug\net5.0\ref\DataAccessLayer.dll
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\bin\Debug\net5.0\DataAccessLayer.pdb
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\bin\Debug\net5.0\EntityLayer.dll
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\bin\Debug\net5.0\EntityLayer.pdb
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.csproj.AssemblyReference.cache
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.AssemblyInfoInputs.cache
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.AssemblyInfo.cs
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.csproj.CoreCompileInputs.cache
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.dll
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.0\ref\DataAccessLayer.dll
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.pdb
+C:\Users\vusal\source\repos\BlogProject\DataAccessLayer\obj\Debug\net5.0\DataAccessLayer.genruntimeconfig.cache

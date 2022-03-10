@@ -1,0 +1,186 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Weblog, Blog, My Blog" />
+
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <link href="~/Template/css/bootstrap.css" rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="~/Template/css/single.css">
+    <link href="~/Template/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="~/Template/css/fontawesome-all.css" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800"
+          rel="stylesheet">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+
+<body>
+    <!--Header-->
+
+    <header>
+        <div class="top-bar_sub_w3layouts container-fluid">
+            <div>
+                <div class="logo text-center">
+                    <a class="navbar-brand" href="/Blog/Index">
+                        <i class="fab fa-linode"></i> Weblog
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="header_top" id="home">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button class="navbar-toggler navbar-toggler-right mx-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav m-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog/Index">Blogs</a>
+                        </li>
+                        <li class="nav-item">
+                            @await Component.InvokeAsync("WriterMessageNotification")
+                        </li>
+                    </ul>
+                </div>
+                <div class="text-right">
+                    <div class="nav-item dropdown d-inline-block">
+                        <a class="nav-button dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item p-2 text-center" href="#"><span> Standart Blog</span></a>
+                            <a class="dropdown-item p-2 text-center" href="/Writer/EditWriter"><img src="~/Template/webfonts/user-gear-solid.svg" width="20" height="20" /> <span> Settings</span></a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item p-2 text-center" href="#"><i class="fas fa-sign-out-alt"></i> <span> Sign Out</span></a>
+                        </div>
+                    </div>
+                    <div class="d-inline-block">
+                        @await Component.InvokeAsync("WriterNotification")
+                    </div>
+                </div>
+            </nav>
+
+        </div>
+
+    </header>
+    <!--//header-->
+    <!--/main-->
+    @RenderBody()
+    <!--//main-->
+    <!--footer-->
+
+<footer>
+    <!-- footer -->
+    <div class="footer-cpy text-center">
+        <div class="footer-social">
+            <div class="copyrighttop">
+                <ul>
+                    <li class="mx-3">
+                        <a class="facebook" href="#">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Facebook</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="facebook" href="#">
+                            <i class="fab fa-twitter"></i>
+                            <span>Twitter</span>
+                        </a>
+                    </li>
+                    <li class="mx-3">
+                        <a class="facebook" href="#">
+                            <i class="fab fa-google-plus-g"></i>
+                            <span>Google+</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="facebook" href="#">
+                            <i class="fab fa-pinterest-p"></i>
+                            <span>Pinterest</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="w3layouts-agile-copyrightbottom">
+            <p>
+                © @DateTime.Now.Year Weblog. All Rights Reserved
+            </p>
+
+        </div>
+    </div>
+    <!-- //footer -->
+</footer>
+
+    <!---->
+    <!-- js -->
+    <script src="~/Template/js/jquery-2.2.3.min.js"></script>
+    <!-- //js -->
+    <!--/ start-smoth-scrolling -->
+    <script src="~/Template/js/move-top.js"></script>
+    <script src="~/Template/js/easing.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 900);
+            });
+        });
+    </script>
+    <!--// end-smoth-scrolling -->
+
+    <script>
+        $(document).ready(function () {
+            /*
+                                    var defaults = {
+                                            containerID: 'toTop', // fading element id
+                                        containerHoverID: 'toTopHover', // fading element hover id
+                                        scrollSpeed: 1200,
+                                        easingType: 'linear'
+                                        };
+                                    */
+
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+    <a href="#home" class="scroll" id="toTop" style="display: block;">
+        <span id="toTopHover" style="opacity: 1;"> </span>
+    </a>
+
+    <!-- //Custom-JavaScript-File-Links -->
+    <script src="~/Template/js/bootstrap.js"></script>
+
+
+</body>
+
+</html>

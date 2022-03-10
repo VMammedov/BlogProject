@@ -1,0 +1,109 @@
+﻿@model WriterEditViewModel
+
+@{
+    ViewData["Title"] = "EditWriter";
+    Layout = "~/Views/Shared/_WriterPanelLayout.cshtml";
+}
+
+<head>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <link href="~/Template/css/style.css" rel='stylesheet' type='text/css' />
+</head>
+
+<section class="service_section layout_padding-bottom" style="background-color:#f7f7f7; padding:2rem">
+    <div class="container">
+        <div>
+            <div class="d-flex justify-content-center align-items-center">
+                <h2 class="d-inline-block mr-5">
+                    Edit Profile
+                </h2>
+                <button id="btnEdit" class="custom-button d-inline-block" style="padding:.4rem 1rem .4rem 1rem ; border-radius:8px;">
+                    <span><i class="fas fa-edit" style="margin-left:4px;"></i></span>
+                </button>
+            </div>
+            <div>
+                <form method="post" enctype="multipart/form-data">
+                    <div class="text-center mt-5">
+                        <div class="profile d-flex justify-content-center align-items-center m-auto">
+                            <img class="profile-img" src="~/WriterImageFiles/@Model.WriterImagePath" />
+                            <label for="pp-img" class="fas fa-camera camera-icon"></label>
+                        </div>
+                        <span class="text-danger font-weight-bold ml-2" asp-validation-for="WriterImage"></span>
+                    </div>
+
+                    <div class="profile-img-input">
+                        <input type="file" class="form-control" id="pp-img" asp-for="WriterImage" placeholder="Your NickName..." required disabled>
+                    </div>
+                    <div class="p-4">
+                        <label for="nickname">NickName</label>
+                        <span class="text-danger font-weight-bold ml-2" asp-validation-for="WriterNickName"></span>
+                        <input type="text" class="form-control" id="name" asp-for="WriterNickName" placeholder="Your NickName..." required disabled>
+                    </div>
+
+                    <div class="p-4">
+                        <label for="name">Name</label>
+                        <span class="text-danger font-weight-bold ml-2" asp-validation-for="WriterName"></span>
+                        <input type="text" class="form-control" id="name" asp-for="WriterName" placeholder="Your Name..." required disabled>
+                    </div>
+
+                    <div class="p-4">
+                        <label for="surname">Last Name</label>
+                        <span class="text-danger font-weight-bold ml-2" asp-validation-for="WriterSurName"></span>
+                        <input style="" type="text" class="form-control" id="name" asp-for="WriterSurName" placeholder="Your Last Name..." required disabled>
+                    </div>
+
+                    <div class="p-4">
+                        <label for="mail">Email</label>
+                        <span class="text-danger font-weight-bold ml-2" asp-validation-for="WriterMail"></span>
+                        <input type="email" class="form-control" id="name" asp-for="WriterMail" placeholder="Your Email..." required disabled>
+                    </div>
+                    <br />
+                    <button type="button" class="custom-button" data-toggle="modal" data-target="#saveModal">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <button type="button" class="bg-danger custom-button" data-toggle="modal" data-target="#deleteModal">
+                        <i class="fas fa-trash"></i> Delete Account
+                    </button>
+                    <button onclick="history.back()" class="custom-button">Cancel</button>
+                    <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="text-center">
+                                    <h3 class="font-weight-light p-3 pt-4">Are you Sure?</h3>
+                                </div>
+                                <div class="text-center p-4">
+                                    <button class="custom-button" type="submit">Save</button>
+                                    <button type="button" class="custom-button btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="text-center">
+                                    <h3 class="font-weight-light p-3 pt-4">Are you Sure for Delete your Account?(</h3>
+                                </div>
+                                <div class="text-center p-4">
+                                    <a class="bg-danger custom-button" href="/Writer/DeleteMyWriterAccount"><i class="fas fa-trash"></i> Yes, Delete</a>
+                                    <button type="button" class="custom-button btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    var inpts = document.querySelectorAll(".form-control");
+    var btnEdit = document.getElementById("btnEdit");
+    btnEdit.addEventListener("click", () => {
+        inpts.forEach(element => element.toggleAttribute("disabled"));
+    });
+</script>

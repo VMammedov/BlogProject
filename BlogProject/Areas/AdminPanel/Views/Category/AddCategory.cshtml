@@ -1,0 +1,35 @@
+﻿@model CategoryAddEditViewModel
+
+@{
+    ViewData["Title"] = "AddCategory";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <div class="bg-light white-card">
+        <div>
+            <div class="text-center p-3">
+                <h1><i class='bx bx-category'></i> Add New Category</h1>
+            </div>
+            <div class="pt-4 pb-4">
+                <form method="post">
+                    <div class="p-3">
+                        <label for="c-name">Category Name</label>
+                        <span class="text-danger font-weight-bold ml-2" asp-validation-for="CategoryName"></span>
+                        <input id="c-name" class="form-control" type="text" asp-for="CategoryName" placeholder="Category Name" required />
+                    </div>
+                    <div class="p-3">
+                        <label for="c-description">Category Description</label>
+                        <span class="text-danger font-weight-bold ml-2" asp-validation-for="CategoryDescription"></span>
+                        <textarea id="c-description" class="form-control" rows="20" asp-for="CategoryDescription" placeholder="Category Description..." required></textarea>
+                    </div>
+                    <div class="text-center p-3">
+                        <button type="button" onclick="window.location.href='/AdminPanel/Dashboard/Index'" class="custom-admin-cancel">Cancel</button>
+                        <button type="submit" class="custom-admin-button">Create Category</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,45 +1,81 @@
-﻿
+﻿@model RegisterDto
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_UserLayout.cshtml";
 }
 
+<head>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</head>
+
 <section class="main-content-w3layouts-agileits">
     <div class="container">
         <h3 class="tittle">Register Now</h3>
         <div class="inner-sec">
             <div class="login p-5 bg-light mx-auto mw-100">
-                <form action="#" method="post">
+                <form action="/Register/Index" method="post">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="validationCustom01">First name</label>
-                            <!--<input type="text" class="form-control" id="validationDefault01"--> @*asp-for=""*@ <!--placeholder="" required="">-->
+                            <label for="name">First name</label>
+                            <span class="text-danger font-weight-bold ml-2" asp-validation-for="Name"></span>
+                            <input type="text" class="form-control" id="name" asp-for="Name" placeholder="" required>
+
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="validationCustom02">Last name</label>
-                            <input type="text" class="form-control" id="validationDefault02" placeholder="" required="">
+                            <label for="lastname">Last name</label>
+                            <span class="text-danger font-weight-bold ml-2" asp-validation-for="SurName"></span>
+                            <input type="text" class="form-control" asp-for="SurName" id="lastname" placeholder="" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="nickname">NickName</label>
+                            <span class="text-danger font-weight-bold ml-2" asp-validation-for="NickName"></span>
+                            <input type="text" class="form-control" id="nickname" asp-for="NickName" placeholder="" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="mail">Email Address</label>
+                            <span class="text-danger font-weight-bold ml-2" asp-validation-for="Mail"></span>
+                            <input type="email" class="form-control" asp-for="Mail" id="mail" placeholder="" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label for="exampleInputPassword1 mb-2">Password</label>
-                            <input type="password" class="form-control" id="password1" placeholder="" required="">
+                            <label for="exampleInputPassword1">Password</label>
+                            <span class="text-danger font-weight-bold ml-2" asp-validation-for="Password1"></span>
+                            <input type="password" class="form-control" asp-for="Password1" id="password1" placeholder="" required="">
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="exampleInputPassword2 mb-2">Confirm Password</label>
-                            <input type="password" class="form-control" id="password2" placeholder="" required="">
+                            <label for="exampleInputPassword2">Confirm Password</label>
+                            <span class="text-danger font-weight-bold ml-2" asp-validation-for="Password2"></span>
+                            <input type="password" class="form-control" asp-for="Password2" id="password2" placeholder="" required="">
                         </div>
-
+                    </div>
+                    <div class="form-row">
+                        <label for="selection" class="m-auto">Country</label>
+                        <select class="form-group form-control col-md-12 mt-2" asp-for="CountryID">
+                            @foreach (var item in ViewBag.country)
+                            {
+                                <option class="form-control" value="@item.CountryID">@item.country</option>
+                            }
+                        </select>
+                        <span class="d-block text-danger font-weight-bold ml-2" asp-validation-for="CountryID"></span>
                     </div>
                     <button type="submit" class="btn btn-primary submit mb-4">Register</button>
                     <p>
-                        <a href="#">By clicking Signup, I agree to your terms</a>
+                        <a id="policyterms">I read and allow all policy and terms.</a>
                     </p>
                 </form>
-
             </div>
         </div>
     </div>
+    <script>
+        $('#policyterms').click(function () {
+            swal("Policy and Terms","Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quam adipiscing vitae proin sagittis nisl. Imperdiet dui accumsan sit amet. Tortor at risus viverra adipiscing at in tellus integer. Sapien pellentesque habitant morbi tristique. Sem integer vitae justo eget magna fermentum iaculis eu non. Pharetra vel turpis nunc eget lorem dolor sed. Placerat orci nulla pellentesque dignissim enim sit. Scelerisque fermentum dui faucibus in ornare. Tortor condimentum lacinia quis vel. Interdum velit euismod in pellentesque massa placerat duis. Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa eget. Amet tellus cras adipiscing enim eu turpis egestas pretium.");
+        });
+    </script>
 </section>
 

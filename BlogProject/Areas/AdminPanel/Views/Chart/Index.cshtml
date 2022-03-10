@@ -1,0 +1,98 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<head>
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+
+<h1>Analytics</h1>
+<div class="w-100 white-card bg-white m-0 p-0">
+    <div class="chart" id="myCategoryChart">
+    </div>
+    <div class="chart" id="myWritersByCountryChart">
+    </div>
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', { 'packages': ['corechart'] });
+
+        google.charts.setOnLoadCallback(drawChartCategory);
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChartCategory() {
+            $(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/AdminPanel/Category/CategoryChart/',
+                    success: function (chartsdata) {
+                        var categoryData = chartsdata.jsonlist;
+                        // Create the data table.
+                        var data = new google.visualization.DataTable();
+                        data.addColumn("string", "categoryname");
+                        data.addColumn("number", "blogscount");
+                        for (var i = 0; i < categoryData.length; i++) {
+                            data.addRow([categoryData[i].categoryname, categoryData[i].blogscount]);
+                        }
+
+                        var chart = new google.visualization.PieChart(document.getElementById('myCategoryChart'));
+
+                        var options = {
+                            'title': "Blog's count by Category",
+                            'height': 330
+                        };
+
+                        chart.draw(data, options);
+                    }
+                });
+            });
+        }
+
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChartWritersByCountry);
+
+        function drawChartWritersByCountry() {
+            $(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '/AdminPanel/AdminWriter/WritersByCountry/',
+                    success: function (chartsdata) {
+                        var writerData = chartsdata.writersjson;
+                        var data = new google.visualization.DataTable();
+                        data.addColumn('string', 'Country');
+                        data.addColumn('number', 'Writers');
+                        $.each(writerData, function (i, writerData) {
+                            var country = writerData.writercountry;
+                            var wbyc_count = writerData.writerscountbycountry;
+                            data.addRows([[country, wbyc_count]]);
+                        });
+                        var options = {
+                            title: "The number of Writers by Country",
+                            hAxis: {
+                                title: "Countries"
+                            },
+                            vAxis: {
+                                title: 'The Number of Writers',
+                                height: 330
+                            }
+                        };
+
+                        var chart = new google.visualization.ColumnChart(document.getElementById('myWritersByCountryChart'));
+                        chart.draw(data, options);
+                    }
+                });
+            });
+        }
+
+        $(window).resize(function () {
+            drawChartCategory();
+            drawChartWritersByCountry();
+        });
+    </script>
+}

@@ -1,0 +1,57 @@
+﻿@model List<WriterMessagesPopUpViewModel>
+
+@{
+    DateTime current = DateTime.Now;
+}
+
+<button class="nav-link nav-button" data-toggle="modal" data-target="#MessageModal">
+    <i class="fas fa-envelope"></i> Messages
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="MessageModal" tabindex="-1" role="dialog" aria-labelledby="MessageModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-flex align-items-center">
+                <h5 class="modal-title" id="MessageModalTitle"><i class="fas fa-envelope"></i> Messages</h5>
+                <a class="custom-button ml-3" style="border-radius:6px;" href="/Message/Inbox">See All</a>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-left p-4">
+                @foreach (WriterMessagesPopUpViewModel item in Model)
+                {
+                    <div class="card text-center mb-3">
+                        <div class="card-header card-notification">
+                            <div>
+                                @item.Sender.WriterNickName
+                            </div>
+                            <div class="text-center">
+                                <p class="text-light" style="font-size:.8rem">@item.Sender.WriterMail</p>
+                            </div>
+                        </div>
+                        <div class="card-body" style="color: #01cd74;">
+                            <h5 class="card-title p-2 m-0">@item.Subject</h5>
+                            <p class="card-text">@item.MessageContent</p>
+                        </div>
+                        <div class="card-footer text-light card-notification-date ">
+                            @{
+                                string msgdate = (int)current.Subtract(item.MessageDate).TotalDays != 0 ?
+                                ((int)current.Subtract(item.MessageDate).TotalDays + " day " + ((int)current.Subtract(item.MessageDate).TotalHours % 24) + " hours ago...").ToString() :
+                                ((int)current.Subtract(item.MessageDate).TotalHours % 24) != 0 ? (((int)current.Subtract(item.MessageDate).TotalHours % 24) + " hours ago...").ToString() :
+                                (((int)current.Subtract(item.MessageDate).Minutes) + " minutes ago...").ToString();
+                            }
+                            @msgdate
+                        </div>
+                    </div>
+                    <hr />
+                }
+            </div>
+            <div class="modal-footer">
+                <a href="/Message/Inbox" class="btn nav-link">See All</a>
+                <button type="button" class="btn nav-link" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

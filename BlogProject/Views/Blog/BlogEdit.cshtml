@@ -1,0 +1,66 @@
+﻿@model BlogCreateViewModel
+
+@{
+    ViewData["Title"] = "BlogEdit";
+    Layout = "~/Views/Shared/_WriterPanelLayout.cshtml";
+}
+
+<head>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <style>
+        .mymodal{
+
+        }
+    </style>
+</head>
+
+<div class="container p-4">
+    <div class="bg-light" style="border-radius:12px">
+        <div class="text-center p-3">
+            <h2><i class="fas fa-edit"></i> Editting "@Model.BlogTitle" Blog</h2>
+        </div>
+        <form class="p-4" action="/Blog/BlogEdit" method="post">
+            <input type="hidden" asp-for="BlogID" />
+            <div class="p-3">
+                <label for="blogtitle">Blog Title</label>
+                <span class="text-danger font-weight-bold ml-2" asp-validation-for="BlogTitle"></span>
+                <input id="blogtitle" class="form-control" type="text" asp-for="BlogTitle" />
+            </div>
+            <div class="p-3">
+                <label for="blogimg">Blog Image</label>
+                <span class="text-danger font-weight-bold ml-2" asp-validation-for="BlogImage"></span>
+                <input id="blogimg" class="form-control" type="text" asp-for="BlogImage" />
+            </div>
+            <div class="p-3">
+                <label for="blogtimg">Thumbnail Image</label>
+                <span class="text-danger font-weight-bold ml-2" asp-validation-for="BlogThumbnailImage"></span>
+                <input id="blogtimg" class="form-control" type="text" asp-for="BlogThumbnailImage" />
+            </div>
+            <div class="p-3">
+                <label for="blogcategory">Category</label>
+                <span class="text-danger font-weight-bold ml-2" asp-validation-for="CategoryID"></span>
+                <select class="form-group form-control col-md-12 mt-2" asp-for="CategoryID">
+                    @foreach (var item in ViewBag.categories)
+                    {
+                        <option class="form-control" value="@item.CategoryID">@item.CategoryName</option>
+                    }
+                </select>
+            </div>
+            <div class="p-3">
+                <label for="blogcontent">Blog Content</label>
+                <span class="text-danger font-weight-bold ml-2" asp-validation-for="BlogContent"></span>
+                <textarea id="blogcontent" class="form-control" rows="20" asp-for="BlogContent"></textarea>
+            </div>
+            <div class="text-center p-3">
+                <button type="button" onclick="history.back()" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="custom-button">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+

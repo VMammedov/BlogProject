@@ -1,0 +1,101 @@
+﻿@model IPagedList<CategoryDashboardViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@await Component.InvokeAsync("Cards") 
+
+<div class="pt-3">
+    <div class="table-bg mt-4">
+        <div class="card-header-custom">
+            <h3>Categories</h3>
+            <a href="/AdminPanel/Dashboard/ExportToExcel" class="btn custom-admin-button ml-auto mr-3"><i class="fas fa-file-excel"></i> Export in Excel</a>
+            <a href="/AdminPanel/Category/AddCategory" class="btn custom-admin-button">New Category <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="card-body mt-2">
+            <div class="table-responsive">
+                <table class="table-custom" style="width: 100%;">
+                    <thead class="thead-custom">
+                        <tr>
+                            <td>#</td>
+                            <td>Category Name</td>
+                            <td>Category Description</td>
+                            <td>Status</td>
+                            <td>Operations</td>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody-custom">
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+                                <td>@(i+1)</td>
+                                <td>@Model[i].CategoryName</td>
+                                @if (Model[i].CategoryDescription.Length > 30)
+                                {
+                                    <td>@Model[i].CategoryDescription.Substring(0, 30)<span>...</span></td>
+                                }
+                                else
+                                {
+                                    <td>@Model[i].CategoryDescription</td>
+                                }
+                            <td>
+                                @if (Model[i].CategoryStatus)
+                                {
+                                    <span class="status green"></span>
+                                    <a class="btn btn-outline-danger">De Activate</a>
+                                }
+                                else
+                                {
+                                    <span class="status red"></span>
+                                    <a class="btn btn-outline-success">Activate</a>
+                                }
+                            </td>
+                                <td class="d-flex justify-content-between">
+                                    <a class="btn btn-dark" href="#"><i class="fas fa-eye"></i></a>
+                                    <a class="btn btn-dark" href="#"><i class="fas fa-edit"></i></a>
+                                    <button type="button" onclick="delCategory(@Model[i].CategoryID)" class="btn btn-dark">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "Dashboard", new { page }), new PagedListRenderOptions
+{
+    PageClasses = new string[] { "page-link bg-dark text-light border-dark" },
+    LiElementClasses = new string[] { "page-item" },
+    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+    ContainerDivClasses = new string[] {"p-1 pt-3"},
+    ActiveLiElementClass = "active-page"
+})
+
+<script>
+    function delCategory(id) {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you'll not be able to recover this Category!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Poof! Your imaginary Category has been deleted!", {
+                        icon: "success",
+                    });
+                    window.location.href = '/AdminPanel/Category/DeleteCategory/' + id;
+                } else {
+                    swal("Your imaginary Category has not been deleted!");
+                }
+            });
+    }
+</script>

@@ -1,0 +1,116 @@
+﻿@model List<WriterMessagesPopUpViewModel>
+
+@{
+    ViewData["Title"] = "Inbox";
+    Layout = "~/Views/Shared/_WriterPanelLayout.cshtml";
+    DateTime current = DateTime.Now;
+}
+
+<div class="p-5">
+    <div class="bg-light p-4" style="border-radius:12px">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mail-card" style="border-radius:12px">
+                    <div class="card-body bg-custom text-white mailbox-widget pb-0" style="border-start-start-radius:12px; border-start-end-radius:12px;">
+                        <h2 class="text-white pb-3">Your Mailbox</h2>
+                        <ul class="nav nav-tabs mail-custom-tab border-bottom-0 mt-4" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link custom-mail-nav-button active" id="inbox-tab">
+                                    <span class="d-block d-md-none"><i class="ti-email"></i></span>
+                                    <span class="d-none d-md-block"> INBOX</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link custom-mail-nav-button" id="sent-tab">
+                                    <span class="d-block d-md-none"><i class="ti-export"></i></span>
+                                    <span class="d-none d-md-block">SENT</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link custom-mail-nav-button" id="spam-tab">
+                                    <span class="d-block d-md-none"><i class="ti-panel"></i></span>
+                                    <span class="d-none d-md-block">SPAM</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link custom-mail-nav-button" id="delete-tab">
+                                    <span class="d-block d-md-none"><i class="ti-trash"></i></span>
+                                    <span class="d-none d-md-block">DELETED</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade active show" id="inbox" aria-labelledby="inbox-tab" role="tabpanel">
+                            <div>
+                                <div class="row p-4 no-gutters align-items-center">
+                                    <div class="col-sm-12 col-md-6">
+                                        <h3 class="font-light mb-0"><i class="ti-email mr-2"></i>1 Unread emails</h3>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="text-right">
+                                            <a href="#">
+                                                <span class="btn btn-circle btn-success text-white">
+                                                    <i class="fa fa-plus"></i>
+                                                </span>
+                                                <span class="ml-2 font-normal text-dark">Compose</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Mail list-->
+                                <div class="table-responsive">
+                                    <table class="table email-table no-wrap table-hover v-middle mb-0 font-14">
+                                        <tbody>
+                                            <!-- row -->
+                                            @foreach (WriterMessagesPopUpViewModel item in Model)
+                                            {
+                                                <tr>
+                                                    <!-- label -->
+                                                    <td class="pl-3">
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="cst1" />
+                                                            <label class="custom-control-label" for="cst1">&nbsp;</label>
+                                                        </div>
+                                                    </td>
+                                                    <!-- star -->
+                                                    <td><i class="fa fa-star text-warning"></i></td>
+                                                    <td>
+                                                        <span class="mb-0 text-muted">@item.Sender.WriterNickName</span>
+                                                    </td>
+                                                    <!-- Message -->
+                                                    <td>
+                                                        <a class="link" href="/Message/MessageDetails/@item.MessageID">
+                                                            <span class="badge badge-pill text-white font-medium badge-danger mr-2">@item.Subject</span>
+                                                            @if (item.MessageContent.Length > 60)
+                                                            {
+                                                                <span class="text-dark">@item.MessageContent.Substring(0,60)</span><span class="text-dark">...</span>
+                                                            }
+                                                            else
+                                                            {<span class="text-dark">@item.MessageContent</span>}
+                                                        </a>
+                                                    </td>
+                                                    <!-- Time -->
+                                                    <td class="text-muted">
+                                                        @{
+                                                            string msgdate = (int)current.Subtract(item.MessageDate).TotalDays != 0 ?
+                                                            ((int)current.Subtract(item.MessageDate).TotalDays + " day " + ((int)current.Subtract(item.MessageDate).TotalHours % 24) + " hours ago...").ToString() :
+                                                            ((int)current.Subtract(item.MessageDate).TotalHours % 24) != 0 ? (((int)current.Subtract(item.MessageDate).TotalHours % 24) + " hours ago...").ToString() :
+                                                            (((int)current.Subtract(item.MessageDate).Minutes) + " minutes ago...").ToString();
+                                                        }
+                                                        @msgdate
+                                                    </td>
+                                                </tr>
+                                            }
+                                            <!-- row -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

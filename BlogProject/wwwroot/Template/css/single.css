@@ -234,6 +234,28 @@ h5.mt-0 {
     background: #080808;
 }
 
+.submit_button {
+    outline: none;
+    padding: 20px 0;
+    font-size: 14px;
+    color: #fff;
+    background: #0e0f10;
+    border: none;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+    transition: 0.5s all;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.submit_button:hover {
+    background-color: #01cd74;
+}
+
 .media-body p {
     color: #777;
     font-size: 0.875em;
