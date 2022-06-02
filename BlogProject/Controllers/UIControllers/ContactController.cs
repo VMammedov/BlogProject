@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace BlogProject.Controllers.UIControllers
 {
+    [AllowAnonymous]
     public class ContactController : Controller
     {
 
@@ -23,7 +25,7 @@ namespace BlogProject.Controllers.UIControllers
         public IActionResult Index(Contact contact)
         {
             cm.TAdd(contact);
-            return View();
+            return RedirectToAction("Index");
         }
     }
 }

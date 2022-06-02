@@ -17,30 +17,122 @@ namespace BlogProject.Controllers.UIControllers
         MessageManager mm = new MessageManager(new EfMessageRepository());
         public IActionResult Inbox()
         {
-            string usermail = User.Identity.Name;
-            int id = FunctionHelper.GetWriterIdByMail(usermail);
-            List<Message> messages = mm.GetInboxListByWriter(id);
-            List<WriterMessagesPopUpViewModel> writerMessages = new List<WriterMessagesPopUpViewModel>();
+            string username = User.Identity.Name;
+            int id = FunctionHelper.GetUserIdByName(username);
+            List<Message> messages = mm.GetInboxListByUser(id);
+            List<MessageBoxViewModel> userMessages = new List<MessageBoxViewModel>();
             foreach (Message item in messages)
             {
-                WriterMessagesPopUpViewModel message = new WriterMessagesPopUpViewModel
+                UserDetailsForMsgViewModel userDetailsForMsg = new UserDetailsForMsgViewModel()
+                {
+                    SenderNickName = item.Sender.UserName
+                };
+                MessageBoxViewModel message = new MessageBoxViewModel
                 {
                     MessageID = item.MessageID,
-                    SenderID = item.SenderID,
-                    Sender = item.Sender,
-                    MessageContent = item.MessageContent,
+                    User = userDetailsForMsg,
+                    MessageContent = FunctionHelper.RemoveHTMLTags(item.MessageContent),
                     Subject = item.Subject,
                     MessageDate = item.MessageDate
                 };
-                writerMessages.Add(message);
+                userMessages.Add(message);
             }
-            return View(writerMessages);
+            return View(userMessages);
         }
 
-        public IActionResult MessageDetails(int id)
+        public IActionResult SentBox()
+        {
+            string username = User.Identity.Name;
+            int id = FunctionHelper.GetUserIdByName(username);
+            List<Message> messages = mm.GetSentBoxListByUser(id);
+            List<MessageBoxViewModel> userMessages = new List<MessageBoxViewModel>();
+            foreach (Message item in messages)
+            {
+                UserDetailsForMsgViewModel userDetailsForMsg = new UserDetailsForMsgViewModel()
+                {
+                    ReceiverNickName = item.Receiver.UserName
+                };
+                MessageBoxViewModel message = new MessageBoxViewModel
+                {
+                    MessageID = item.MessageID,
+                    User = userDetailsForMsg,
+                    MessageContent = FunctionHelper.RemoveHTMLTags(item.MessageContent),
+                    Subject = item.Subject,
+                    MessageDate = item.MessageDate
+                };
+                userMessages.Add(message);
+            }
+            return View(userMessages);
+        }
+
+        public IActionResult NewMessage()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult NewMessage(NewMessageViewModel messageViewModel)
+        {
+            if(ModelState.IsValid)
+            {
+                Message message = new Message()
+                {
+                    SenderId = FunctionHelper.GetUserIdByName(User.Identity.Name),
+                    MessageContent = messageViewModel.MessageContent,
+                    ReceiverId = FunctionHelper.GetUserIdByEmail(messageViewModel.RecieverMail),
+                    Subject = messageViewModel.Subject,
+                    MessageDate = DateTime.Now
+                };
+                mm.TAdd(message);
+                return RedirectToAction("Inbox");
+            }
+            else
+            {
+                return RedirectToAction("ErrorForNotEligibleOperation", "Error");
+            }
+        }
+
+        public IActionResult InboxMessageDetails(int id)
         {
             Message message = mm.GetByID(id);
-            return View(message);
+            UserDetailsForMsgViewModel userDetailsForMsg = new UserDetailsForMsgViewModel()
+            {
+                ReceiverNickName = message.Receiver.UserName,
+                ReceiverMail= message.Receiver.Email,
+                SenderNickName = message.Sender.UserName,
+                SenderMail = message.Sender.Email,
+                SenderImage = message.Sender.UserImage
+            };
+            MessageBoxViewModel messageVM = new MessageBoxViewModel
+            {
+                MessageID = message.MessageID,                
+                User = userDetailsForMsg,
+                MessageContent = message.MessageContent,
+                Subject = message.Subject,
+                MessageDate = message.MessageDate
+            };
+            return View(messageVM);
+        }
+
+        public IActionResult SentboxMessageDetails(int id)
+        {
+            Message message = mm.GetByID(id);
+            UserDetailsForMsgViewModel userDetailsForMsg = new UserDetailsForMsgViewModel()
+            {
+                ReceiverNickName = message.Receiver.UserName,
+                ReceiverMail = message.Receiver.Email,
+                SenderMail = message.Sender.Email,
+                ReceiverImage = message.Receiver.UserImage
+            };
+            MessageBoxViewModel messageVM = new MessageBoxViewModel
+            {
+                MessageID = message.MessageID,
+                User = userDetailsForMsg,
+                MessageContent = message.MessageContent,
+                Subject = message.Subject,
+                MessageDate = message.MessageDate
+            };
+            return View(messageVM);
         }
     }
 }

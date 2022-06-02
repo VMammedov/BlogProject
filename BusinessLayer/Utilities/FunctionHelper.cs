@@ -18,28 +18,56 @@ namespace BusinessLayer.Utilities
             string fileName = Guid.NewGuid() + extension;
             string location = Path.Combine("C:\\Users\\vusal\\source\\repos\\BlogProject\\BlogProject\\wwwroot/WriterImageFiles/",fileName);
             FileStream stream = new FileStream(location, FileMode.Create);
-            file.CopyToAsync(stream);
+            file.CopyTo(stream);
             return fileName;
         }
 
-        public static int GetWriterIdByMail(string mail)
+        public static string AddBlogImage(IFormFile file)
+        {
+            string extension = Path.GetExtension(file.FileName);
+            string fileName = Guid.NewGuid() + extension;
+            string location = Path.Combine("C:\\Users\\vusal\\source\\repos\\BlogProject\\BlogProject\\wwwroot\\Template/images/", fileName);
+            FileStream stream = new FileStream(location, FileMode.Create);
+            file.CopyTo(stream);
+            return ("~/Template/images/"+fileName);
+        }
+
+        public static int GetUserIdByName(string UserName)
         {
             int id;
             using (Context c = new Context())
             {
-                id = c.Writers.Where(x => x.WriterMail == mail).FirstOrDefault().WriterID;
+                id = c.Users.Where(x => x.UserName == UserName).FirstOrDefault().Id;
             }
             return id;
         }
 
-        public static Writer GetWriterByMail(string mail)
+        public static int GetUserIdByEmail(string Email)
         {
-            Writer writer = new Writer();
+            int id;
+            using (Context c = new Context())
+            {
+                id = c.Users.Where(x => x.Email == Email).FirstOrDefault().Id;
+            }
+            return id;
+        }
+
+        public static AppUser GetUserByName(string UserName)
+        {
+            AppUser user = new AppUser();
             using(Context c = new Context())
             {
-                writer = c.Writers.Where(x => x.WriterMail == mail).FirstOrDefault();
+                user = c.Users.Where(x => x.UserName == UserName).FirstOrDefault();
             }
-            return writer;
+            return user;
+        }
+
+        public static string RemoveHTMLTags(String str)
+        {
+            System.Text.RegularExpressions.Regex rx =
+            new System.Text.RegularExpressions.Regex("<[^>]*>");
+            str = rx.Replace(str, "");
+            return str;
         }
     }
 }

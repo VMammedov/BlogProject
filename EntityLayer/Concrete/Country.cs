@@ -15,6 +15,6 @@ namespace EntityLayer.Concrete
         [StringLength(50)]
         public string country { get; set; }
 
-        public ICollection<Writer> Writers { get; set; }
+        public ICollection<AppUser> Users { get; set; }
     }
 }

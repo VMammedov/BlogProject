@@ -9,6 +9,6 @@ namespace BusinessLayer.Abstract
 {
     public interface ICountryService : IGenericService<Country>
     {
-        List<Country> GetListWithWriters();
+        List<Country> GetListWithUsers();
     }
 }

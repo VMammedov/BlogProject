@@ -1,0 +1,16 @@
+﻿@model BlogListViewModel
+
+<div class="blog-grids">
+    <div class="blog-grid-left">
+        <a href="/Blog/BlogReadAll/@Model.BlogID">
+            <img src="@Model.BlogThumbnailImage" class="card-img-top img-fluid">
+        </a>
+    </div>
+    <div class="blog-grid-right">
+        <div class="d-flex justify-content-between align-items-center">
+            <a class="text-dark" href="/Blog/BlogReadAll/@Model.BlogID">@Model.BlogTitle</a>
+            <p><i class="fas fa-calendar text-success"></i> @Model.BlogCreateDate.ToString("dd/MM/yyyy")</p>
+        </div>
+    </div>
+    <div class="clearfix"> </div>
+</div>

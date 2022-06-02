@@ -10,7 +10,7 @@ namespace DataAccessLayer.Abstract
 {
     public interface IMessageDal : IGenericDal<Message>
     {
-        public List<Message> GetListAllWithWriter(Expression<Func<Message, bool>> filter = null);
-        public Message GetByIDWithWriters(int id);
+        public List<Message> GetListAllWithUser(Expression<Func<Message, bool>> filter = null);
+        public Message GetByIDWithUser(int id);
     }
 }

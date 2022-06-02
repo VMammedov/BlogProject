@@ -1,0 +1,178 @@
+﻿@model IPagedList<ContactListViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row d-flex align-items-center pt-3">
+    <div class="table-bg mt-4 col-md-9">
+        <div class="card-header-custom">
+            <h3>Messages <i class='bx bx-chat'></i></h3>
+            <a href="/AdminPanel/" class="btn custom-admin-button ml-auto mr-3"><i class="fas fa-file-excel"></i> Export in Excel</a>
+        </div>
+        <div class="card-body mt-2">
+            <div class="table-responsive">
+                <table class="table-custom w-100">
+                    <thead class="thead-custom">
+                        <tr>
+                            <td>#</td>
+                            <td>Mail</td>
+                            <td>Subject</td>
+                            <td>Status</td>
+                            <td>Operations</td>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody-custom">
+                        @foreach (ContactListViewModel item in Model)
+                        {
+                            <tr>
+                                <td class="my-table-data">@item.ContactID</td>
+                                <td class="my-table-data" id="td-mail-@item.ContactID">@item.ContactMail</td>
+                                <td class="my-table-data">@item.ContactSubject</td>
+                                <td id="table-data-@item.ContactID">
+                                    @if (item.ContactStatus)
+                                    {
+                                        <span class="status green"></span>
+                                        <button onclick="markAsUnRead(@item.ContactID)" class="btn btn-dark"><i class="fas fa-eye-slash"></i></button>
+                                    }
+                                    else
+                                    {
+                                        <span class="status red"></span>
+                                        <button onclick="markAsRead(@item.ContactID)" class="btn btn-dark"><i class="fas fa-eye"></i></button>
+                                    }
+                                </td>
+                                <td class="d-flex justify-content-around">
+                                    <button class="btn btn-dark" onclick="ContactDetails(@item.ContactID)"><i class="fas fa-eye"></i></button>
+                                    <button type="button" onclick='reply(@item.ContactID)' class="btn btn-dark">
+                                        <i class="fas fa-reply"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <img src="~/AdminPanel/images/Sociabble-header_Company-contact-us-3.png" class="w-100" alt="Contact Us Image" />
+    </div>
+</div>
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "Contact", new { page }), new PagedListRenderOptions
+{
+    PageClasses = new string[] { "page-link bg-dark text-light border-dark" },
+    LiElementClasses = new string[] { "page-item" },
+    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+    ContainerDivClasses = new string[] { "p-1 pt-3" },
+    ActiveLiElementClass = "active-page"
+})
+
+@section scripts {
+    <script>
+        async function reply(contact_id) {
+            let contact_mail = document.getElementById("td-mail-" + contact_id).textContent;
+            const { value: formValues } = await Swal.fire({
+                title: 'Reply to User',
+                html:
+                    `<h4>User Email</h4><input id="swal-input1" class="swal2-input" value="${contact_mail}" style="width:82%" required>` +
+                    `<br /><br /><h4>Your Response</h4><textarea id="swal-input2" class="swal2-input pt-2 pb-2" cols="30" rows="30" style="height:150px;width:80%" required></textarea>`,
+                focusConfirm: false,
+                preConfirm: () => {
+                    return [
+                        document.getElementById('swal-input1').value,
+                        document.getElementById('swal-input2').value
+                    ]
+                }
+            })
+            if (formValues[0] && formValues[1]) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/AdminPanel/Contact/SendResponseEmail/',
+                    data: { email: formValues[0], message: formValues[1]},
+                    success: function () {
+                        Swal.fire(
+                            'Successfully',
+                            'Your message has been sent!',
+                            'success'
+                        );
+                    }
+                });
+                Swal.fire(
+                    'Sending...',
+                    'Please wait, your Message is sending...',
+                    'info'
+                );
+            }
+        }
+
+        function markAsUnRead(contact_id) {
+            Swal.fire(
+                'Successfully',
+                'That message are tagged UnReaded!',
+                'success'
+            );
+            $.ajax({
+                type: 'POST',
+                url: '/AdminPanel/Contact/MarkAsUnRead',
+                data: { id: contact_id }
+            });
+            document.getElementById("table-data-" + contact_id).innerHTML = `<span class="status red"></span>
+                                            <button onclick="markAsRead(${contact_id})" class="btn btn-dark"><i class="fas fa-eye"></i></button>`;
+        }
+
+        function markAsRead(contact_id) {
+            Swal.fire(
+                'Successfully',
+                'That message are tagged Readed!',
+                'success'
+            );
+            $.ajax({
+                type: 'POST',
+                url: '/AdminPanel/Contact/MarkAsRead',
+                data: { id: contact_id }
+            });
+            document.getElementById("table-data-" + contact_id).innerHTML = `<span class="status green"></span>
+                                            <button onclick="markAsUnRead(${contact_id})" class="btn btn-dark"><i class="fas fa-eye-slash"></i></button>`;
+        }
+
+        function ContactDetails(contact_id) {
+            $(function () {
+                $.ajax({
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: '/AdminPanel/Contact/ContactDetails/',
+                    data: { id: contact_id },
+                    success: function (myvalue) {
+                        let data = jQuery.parseJSON(myvalue);
+                        Swal.fire({
+                            icon: 'info',
+                            title: `<span>Details of </span><strong class="text-info">#${data.ContactID}</strong>`,
+                            html:
+                                `<h5>Name : <b class="text-info">${data.ContactName}</b></h5>
+                                            <h5>Last Name :<b class="text-info"> ${data.ContactSurName}</b></h5>
+                                            <h5><i class='bx bx-envelope'></i> Email : <span class="text-info">${data.ContactMail}</span></h5>
+                                            <h4>Subject : <b class="text-info">${data.ContactSubject}</b> </h4>
+                                            <hr />
+                                            <h5 class="font-light text-dark">${data.ContactMessage}</h5>
+                                            <hr />
+                                            <h6 class="text-muted"><b><i class="fas fa-clock"></i> : ${data.ContactDate.slice(0, 10)}</b></h6>`,
+                            showCloseButton: true,
+                            showCancelButton: true,
+                            focusConfirm: false,
+                            confirmButtonText:
+                                `<span class="p-0" onClick="reply(${contact_id})"><i class="fas fa- reply"></i> Reply</span>`,
+                            confirmButtonAriaLabel: 'Edit',
+                            cancelButtonText:
+                                '<span><i class="fas fa-arrow-circle-left" ></i> Okay</span>',
+                            cancelButtonAriaLabel: 'Okay'
+                        });
+                    }
+                })
+            });
+        }
+    </script>
+}

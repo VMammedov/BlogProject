@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace BlogProject.Areas.AdminPanel.Controllers
 {
-    [AllowAnonymous]
     [Area("AdminPanel")]
     public class ChartController : Controller
     {

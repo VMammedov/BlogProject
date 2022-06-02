@@ -8,7 +8,7 @@ namespace BusinessLayer.Abstract
 {
     public interface IAuthService
     {
-        void WriterRegister();
-        void WriterLogin();
+        void UserRegister();
+        void UserLogin();
     }
 }

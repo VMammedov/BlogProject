@@ -9,6 +9,6 @@ namespace BusinessLayer.Abstract
 {
     public interface INotificationService : IGenericService<Notification>
     {
-        public List<Notification> GetNotificationsListByWriter(int id);
+        public List<Notification> GetNotificationsListByUser(int id);
     }
 }

@@ -1,0 +1,40 @@
+﻿@model List<Notification>
+
+<button class="nav-button" data-toggle="modal" data-target="#NotificationModal" style="border:none">
+    <i class="fas fa-bell"></i>
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="NotificationModal" tabindex="-1" role="dialog" aria-labelledby="NotificationModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="NotificationModalTitle"><i class="fas fa-bell"></i> Notifications</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-left p-4">
+                @foreach (var item in Model)
+                {
+                    <div class="card text-center mb-3">
+                        <div class="card-header card-notification">
+                            @item.NotificationType
+                        </div>
+                        <div class="card-body" style="color: #01cd74;">
+                            <h5 class="card-title">@item.NotificationTitle</h5>
+                            <p class="card-text">@item.NotificationDetails</p>
+                        </div>
+                        <div class="card-footer text-muted card-notification-date ">
+                            @item.NotificationDate.ToString("dd-MMMM-yyyy")
+                        </div>
+                    </div>
+                    <hr />
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn nav-button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

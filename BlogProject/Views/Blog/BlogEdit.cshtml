@@ -10,11 +10,6 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <style>
-        .mymodal{
-
-        }
-    </style>
 </head>
 
 <div class="container p-4">
@@ -29,15 +24,25 @@
                 <span class="text-danger font-weight-bold ml-2" asp-validation-for="BlogTitle"></span>
                 <input id="blogtitle" class="form-control" type="text" asp-for="BlogTitle" />
             </div>
-            <div class="p-3">
-                <label for="blogimg">Blog Image</label>
-                <span class="text-danger font-weight-bold ml-2" asp-validation-for="BlogImage"></span>
-                <input id="blogimg" class="form-control" type="text" asp-for="BlogImage" />
+            <div class="p-3 w-100 row">
+                <div class="col-sm-6">
+                    <label for="blogimg">Blog Image</label>
+                    <span class="text-danger font-weight-bold ml-2" asp-validation-for="BlogImage"></span>
+                    <input id="blogimg" class="form-control" style="width:300px" type="file" asp-for="BlogImage" />
+                </div>
+                <div class="col-sm-6">
+                    <img src="~/Template/images/@Model.BlogImagePath" style="width:200px" />
+                </div>
             </div>
-            <div class="p-3">
-                <label for="blogtimg">Thumbnail Image</label>
-                <span class="text-danger font-weight-bold ml-2" asp-validation-for="BlogThumbnailImage"></span>
-                <input id="blogtimg" class="form-control" type="text" asp-for="BlogThumbnailImage" />
+            <div class="p-3 w-100 row">
+                <div class="col-sm-6">
+                    <label for="blogtimg">Thumbnail Image</label>
+                    <span class="text-danger font-weight-bold ml-2" asp-validation-for="BlogThumbnailImage"></span>
+                    <input id="blogtimg" class="form-control" style="width:300px" type="file" asp-for="BlogThumbnailImage" />
+                </div>
+                <div class="col-sm-6">
+                    <img src="~/Template/images/@Model.BlogThumbnailImagePath" style="width:200px" />
+                </div>
             </div>
             <div class="p-3">
                 <label for="blogcategory">Category</label>

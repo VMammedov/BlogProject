@@ -17,7 +17,7 @@
         <div class="text-center p-3">
             <h2><i class="fas fa-pencil-alt"></i> Let's Create New Blog</h2>
         </div>
-        <form class="p-4" action="/Blog/BlogAdd" method="post">
+        <form class="p-4" action="/Blog/BlogAdd" method="post" enctype="multipart/form-data">
             <div class="p-3">
                 <label for="blogtitle">Blog Title</label>
                 <span class="text-danger font-weight-bold ml-2" asp-validation-for="BlogTitle"></span>
@@ -26,12 +26,12 @@
             <div class="p-3">
                 <label for="blogimg">Blog Image</label>
                 <span class="text-danger font-weight-bold ml-2" asp-validation-for="BlogImage"></span>
-                <input id="blogimg" class="form-control" type="text" asp-for="BlogImage" value="" />
+                <input id="blogimg" class="form-control" type="file" asp-for="BlogImage" value="" />
             </div>
             <div class="p-3">
                 <label for="blogtimg">Thumbnail Image</label>
                 <span class="text-danger font-weight-bold ml-2" asp-validation-for="BlogThumbnailImage"></span>
-                <input id="blogtimg" class="form-control" type="text" asp-for="BlogThumbnailImage" value="" />
+                <input id="blogtimg" class="form-control" type="file" asp-for="BlogThumbnailImage" value="" />
             </div>
             <div class="p-3">
                 <label for="blogcategory">Category</label>

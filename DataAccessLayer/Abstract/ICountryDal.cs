@@ -10,6 +10,6 @@ namespace DataAccessLayer.Abstract
 {
     public interface ICountryDal : IGenericDal<Country>
     {
-        public List<Country> GetListWithWriters(Expression<Func<Country, bool>> filter = null);
+        public List<Country> GetListWithUsers(Expression<Func<Country, bool>> filter = null);
     }
 }

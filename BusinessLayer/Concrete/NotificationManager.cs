@@ -28,9 +28,9 @@ namespace BusinessLayer.Concrete
             return _notificationDal.GetListAll();
         }
 
-        public List<Notification> GetNotificationsListByWriter(int id)
+        public List<Notification> GetNotificationsListByUser(int id)
         {
-            return _notificationDal.GetListAll(x => x.WriterID == id);
+            return _notificationDal.GetListAll(x => x.UserId == id);
         }
 
         public void TAdd(Notification obj)

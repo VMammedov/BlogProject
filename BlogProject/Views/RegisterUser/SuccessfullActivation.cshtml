@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewData["Title"] = "SuccessfullActivation";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+
+<link href="~/css/ActivatedSuccessfullStyle.css" rel="stylesheet" />
+
+<div class="container mb-5 mt-3">
+    <div class="row">
+        <div class="col-md-6 mx-auto mt-5">
+            <div class="payment">
+                <div class="payment_header">
+                    <div class="check"><i class="fa fa-check" aria-hidden="true"></i></div>
+                </div>
+                <div class="content">
+                    <h1>Account Activated Successfully!</h1>
+                    <p>You will redirected in <b id="seconds">5</b></p>
+                    <a class="m-4" href="/Blog/Index">Go to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        let second = 5;
+        let el = document.getElementById("seconds");
+        setInterval(() => {
+            if (second > 0) {
+                second--;
+                el.innerText = second;
+            }
+            else {
+                window.location.href = "/Login/Index";
+            }
+        },1000)
+    </script>
+}
+

@@ -48,5 +48,10 @@ namespace BusinessLayer.Concrete
         {
             return _categoryDal.GetListWithBlogs();
         }
+
+        public Category GetCategoryWithBlogs(int id)
+        {
+            return _categoryDal.GetListWithBlogs(x => x.CategoryID == id).FirstOrDefault();
+        }
     }
 }

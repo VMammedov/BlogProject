@@ -15,22 +15,40 @@ using BusinessLayer.Utilities;
 
 namespace BlogProject.Controllers.UIControllers
 {
-    [AllowAnonymous]
     public class BlogController : Controller
     {
         BlogManager bm = new BlogManager(new EfBlogRepository());
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
-            List<Blog> blogs = bm.GetBlogListWithCategory();
-            return View(blogs);
+            List<Blog> Blogs = bm.GetBlogListWithEntities();
+            List<BlogListViewModel> BlogViewModelList = new List<BlogListViewModel>();
+            foreach (Blog item in Blogs)
+            {
+                BlogListViewModel blog = new BlogListViewModel()
+                {
+                    BlogID = item.BlogID,
+                    BlogTitle = item.BlogTitle,
+                    BlogContent = item.BlogContent,
+                    BlogCreateDate = item.BlogCreateDate,
+                    BlogRating = item.BlogRating,
+                    BlogThumbnailImage = item.BlogThumbnailImage,
+                    Category = item.Category.CategoryName,
+                    CommentsCount = item.Comments.Count,
+                    UserName = item.User.UserName,
+                    UserId = item.User.Id
+                };
+                BlogViewModelList.Add(blog);
+            }
+            return View(BlogViewModelList);
         }
 
+        [AllowAnonymous]
         public IActionResult BlogReadAll(int id)
         {
-            List<Blog> blogs = bm.GetBlogByID(id);
-            ViewBag.id = id;
-            return View(blogs);
+            Blog blog = bm.GetByID(id);
+            return View(blog);
         }
 
         public IActionResult BlogAdd()
@@ -52,20 +70,21 @@ namespace BlogProject.Controllers.UIControllers
         {
             if(ModelState.IsValid)
             {
-                string usermail = User.Identity.Name;
-                int id = FunctionHelper.GetWriterIdByMail(usermail);
+                int id = FunctionHelper.GetUserIdByName(User.Identity.Name);
                 Blog blog = new Blog
                 {
                     BlogTitle = blogViewModel.BlogTitle,
                     BlogContent = blogViewModel.BlogContent,
-                    BlogImage = blogViewModel.BlogImage,
-                    BlogThumbnailImage = blogViewModel.BlogThumbnailImage,
                     CategoryID = blogViewModel.CategoryID,
-                    WriterID = id
+                    UserId = id
                 };
+                if (blogViewModel.BlogImage != null)
+                    blog.BlogImage = FunctionHelper.AddBlogImage(blogViewModel.BlogImage);
+                if (blogViewModel.BlogThumbnailImage != null)
+                    blog.BlogThumbnailImage = FunctionHelper.AddBlogImage(blogViewModel.BlogThumbnailImage);
                 bm.TAdd(blog);
             }
-            return RedirectToAction("Dashboard", "WriterPanel");
+            return RedirectToAction("Dashboard", "UserPanel");
         }
 
         public IActionResult BlogDelete(int id)
@@ -74,7 +93,7 @@ namespace BlogProject.Controllers.UIControllers
             {
                 bm.TDelete(bm.GetByID(id));
             }
-            return RedirectToAction("Dashboard","WriterPanel");
+            return RedirectToAction("Dashboard", "UserPanel");
         }
 
         public IActionResult BlogEdit(int id)
@@ -93,10 +112,10 @@ namespace BlogProject.Controllers.UIControllers
             {
                 BlogID = blog.BlogID,
                 BlogContent = blog.BlogContent,
-                BlogImage = blog.BlogImage,
-                BlogThumbnailImage = blog.BlogThumbnailImage,
+                BlogImagePath = blog.BlogImage,
+                BlogThumbnailImagePath = blog.BlogThumbnailImage,
                 BlogTitle = blog.BlogTitle,
-                CategoryID = blog.CategoryID
+                CategoryID = (int)blog.CategoryID
             };
             return View(viewModel);
         }
@@ -106,15 +125,17 @@ namespace BlogProject.Controllers.UIControllers
         {
             if (ModelState.IsValid)
             {
-                Blog blog = bm.GetBlogByID(blogViewModel.BlogID)[0];
+                Blog blog = bm.GetBlogByID(blogViewModel.BlogID).FirstOrDefault();
                 blog.BlogTitle = blogViewModel.BlogTitle;
                 blog.BlogContent = blogViewModel.BlogContent;
-                blog.BlogImage = blogViewModel.BlogImage;
-                blog.BlogThumbnailImage = blogViewModel.BlogThumbnailImage;
                 blog.CategoryID = blogViewModel.CategoryID;
+                if (blogViewModel.BlogImage != null)
+                    blog.BlogImage = FunctionHelper.AddBlogImage(blogViewModel.BlogImage);
+                if (blogViewModel.BlogThumbnailImage != null)
+                    blog.BlogThumbnailImage = FunctionHelper.AddBlogImage(blogViewModel.BlogThumbnailImage);
                 bm.TUpdate(blog);
             }
-            return RedirectToAction("Dashboard", "WriterPanel");
+            return RedirectToAction("Dashboard", "UserPanel");
         }
     }
 }

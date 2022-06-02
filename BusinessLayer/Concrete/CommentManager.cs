@@ -25,7 +25,7 @@ namespace BusinessLayer.Concrete
 
         public List<Comment> GetList(int id)
         {
-            return _commentDal.GetListAll(x => x.BlogID == id);
+            return _commentDal.GetCommentsWithUser(id);
         }
 
         public List<Comment> GetList()

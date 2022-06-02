@@ -5,14 +5,14 @@
     <h4>Sign up to our newsletter</h4>
     <p>Take instantly our blog's notifications about Technology and Programming.</p>
     <form method="post">
-        <input type="email" id="aaaa" placeholder="Email" required="">
+        <input type="email" id="email-nws" placeholder="Email" required="">
         <input id="btnsubmit" class="form-control submit_button" type="button" value="Subscribe">
     </form>
 </div>
 
 <script>
     $("#btnsubmit").click(() => {
-        $.post("https://localhost:44356/newsletter/SubscribeMail", { a: $("#aaaa").val().toString() });
+        $.post("https://localhost:44356/newsletter/SubscribeMail", { a: $("#email-nws").val().toString() });
     });
 
     $("#btnsubmit").click(() => {
@@ -22,5 +22,4 @@
             'success'
         );
     });
-    
 </script>

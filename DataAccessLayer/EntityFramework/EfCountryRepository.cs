@@ -14,12 +14,12 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EfCountryRepository : GenericRepository<Country>, ICountryDal
     {
-        public List<Country> GetListWithWriters(Expression<Func<Country, bool>> filter = null)
+        public List<Country> GetListWithUsers(Expression<Func<Country, bool>> filter = null)
         {
             using( Context context = new Context())
             {
-                return filter == null ? context.Countries.Include(x => x.Writers).ToList() :
-                context.Countries.Where(filter).Include(x => x.Writers).ToList();
+                return filter == null ? context.Countries.Include(x => x.Users).ToList() :
+                context.Countries.Where(filter).Include(x => x.Users).ToList();
             }
         }
     }

@@ -10,6 +10,7 @@ namespace DataAccessLayer.Abstract
 {
     public interface IBlogDal : IGenericDal<Blog>
     {
-        public List<Blog> GetListWithCategory(Expression<Func<Blog, bool>> filter = null);
+        public List<Blog> GetListWithEntities(Expression<Func<Blog, bool>> filter = null);
+        public Blog GetBlogByIdWithEntities(int id);
     }
 }

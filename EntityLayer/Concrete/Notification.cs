@@ -16,7 +16,7 @@ namespace EntityLayer.Concrete
         public string NotificationDetails { get; set; }
         public bool NotificationStatus { get; set; }
         public DateTime NotificationDate { get; set; }
-        public int WriterID { get; set; }
-        public Writer Writer { get; set; }
+        public int UserId { get; set; }
+        public AppUser User { get; set; }
     }
 }

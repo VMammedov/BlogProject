@@ -20,6 +20,7 @@
             window.scrollTo(0, 1);
         }
     </script>
+    <link rel="icon" href="~/VMBlogLogoFavicon.png">
     <link href="~/Template/css/bootstrap.css" rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="~/Template/css/single.css">
     <link href="~/Template/css/style.css" rel='stylesheet' type='text/css' />
@@ -37,7 +38,7 @@
             <div>
                 <div class="logo text-center">
                     <a class="navbar-brand" href="/Blog/Index">
-                        <i class="fab fa-linode"></i> Weblog
+                        <img src="~/VMBlogLogo.png" class="layout-logo" />
                     </a>
                 </div>
             </div>
@@ -61,7 +62,7 @@
                             <a class="nav-link" href="/blog/Index">Blogs</a>
                         </li>
                         <li class="nav-item">
-                            @await Component.InvokeAsync("WriterMessageNotification")
+                            @await Component.InvokeAsync("UserMessageNotification")
                         </li>
                     </ul>
                 </div>
@@ -72,14 +73,14 @@
                             <i class="fas fa-user"></i>
                         </a>
                         <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item p-2 text-center" href="#"><span> Standart Blog</span></a>
-                            <a class="dropdown-item p-2 text-center" href="/Writer/EditWriter"><img src="~/Template/webfonts/user-gear-solid.svg" width="20" height="20" /> <span> Settings</span></a>
+                            <a class="dropdown-item p-2 text-center" href="/UserPanel/Dashboard"><span>My Blogs</span></a>
+                            <a class="dropdown-item p-2 text-center" href="/User/EditUser"><img src="~/Template/webfonts/user-gear-solid.svg" width="20" height="20" /> <span> Settings</span></a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item p-2 text-center" href="#"><i class="fas fa-sign-out-alt"></i> <span> Sign Out</span></a>
+                            <a class="dropdown-item p-2 text-center" href="/Login/Logout"><i class="fas fa-sign-out-alt"></i> <span> Sign Out</span></a>
                         </div>
                     </div>
                     <div class="d-inline-block">
-                        @await Component.InvokeAsync("WriterNotification")
+                        @await Component.InvokeAsync("UserNotification")
                     </div>
                 </div>
             </nav>

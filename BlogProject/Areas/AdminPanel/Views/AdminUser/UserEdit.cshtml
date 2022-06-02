@@ -1,0 +1,68 @@
+﻿@model UserEditViewModel
+
+@{
+    ViewData["Title"] = "UserEdit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container p-4">
+    <div class="bg-light white-card">
+        <div>
+            <div class="text-center p-3">
+                <h1><i class='bx bx-category'></i> Edit User #@Model.UserID</h1>
+            </div>
+            <div class="pt-4">
+                <form method="post" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="UserID" />
+                    <div class="text-center mt-5">
+                        <div class="profile d-flex justify-content-center align-items-center m-auto">
+                            <img class="profile-img" src="~/WriterImageFiles/@Model.UserImagePath" />
+                            <label for="pp-img" class="fas fa-camera camera-icon"></label>
+                        </div>
+                        <span class="text-danger font-weight-bold ml-2" asp-validation-for="UserImage"></span>
+                    </div>
+
+                    <div class="profile-img-input">
+                        <input type="file" class="form-control" id="pp-img" asp-for="UserImage">
+                    </div>
+                    <div class="p-3">
+                        <label for="nickname">NickName</label>
+                        <span class="text-danger font-weight-bold ml-2" asp-validation-for="UserFirstName"></span>
+                        <input id="nickname" class="form-control" type="text" asp-for="UserFirstName" placeholder="NickName..." required />
+                    </div>
+                    <div class="row p-3">
+                        <div class="col-sm-6">
+                            <label for="name">Name</label>
+                            <span class="text-danger font-weight-bold ml-2" asp-validation-for="UserName"></span>
+                            <input id="name" class="form-control" type="text" asp-for="UserName" placeholder="Name..." required />
+                        </div>
+                        <div class="col-sm-6">
+                            <label for="surname">SurName</label>
+                            <span class="text-danger font-weight-bold ml-2" asp-validation-for="UserLastName"></span>
+                            <input id="surname" class="form-control" type="text" asp-for="UserLastName" placeholder="SurName..." required />
+                        </div>
+                    </div>
+                    <div class="p-3">
+                        <label for="mail">Email</label>
+                        <span class="text-danger font-weight-bold ml-2" asp-validation-for="UserMail"></span>
+                        <input id="mail" class="form-control" type="text" asp-for="UserMail" placeholder="Email..." required />
+                    </div>
+                    <div class="p-3">
+                        <label for="selection" class="m-auto">Country</label>
+                        <select class="form-group form-control col-md-12 mt-2" asp-for="CountryID">
+                            @foreach (var item in ViewBag.country)
+                            {
+                                <option class="form-control" value="@item.CountryID">@item.country</option>
+                            }
+                        </select>
+                        <span class="d-block text-danger font-weight-bold ml-2" asp-validation-for="CountryID"></span>
+                    </div>
+                    <div class="text-center p-3">
+                        <button type="button" onclick="window.location.href='/AdminPanel/AdminUser/Index'" class="custom-admin-cancel">Cancel</button>
+                        <button type="submit" class="custom-admin-button">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

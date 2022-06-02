@@ -5,10 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\summernote-0.8.18-dist\**" />
+    <Content Remove="wwwroot\summernote-0.8.18-dist\**" />
+    <EmbeddedResource Remove="wwwroot\summernote-0.8.18-dist\**" />
+    <None Remove="wwwroot\summernote-0.8.18-dist\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.95.4" />
     <PackageReference Include="FluentValidation" Version="10.3.4" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.4" />
     <PackageReference Include="MailKit" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
       <PrivateAssets>all</PrivateAssets>
@@ -32,7 +41,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\AdminPanel\Data\" />
-    <Folder Include="wwwroot\WriterImageFiles\" />
+    <Folder Include="ViewComponents\MessageComponents\" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,198 @@
+﻿@model IPagedList<UserAdminListViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="pt-3">
+    <div class="table-bg">
+        <div class="card-header-custom">
+            <h3>Users</h3>
+            <a href="/AdminPanel/" class="btn custom-admin-button ml-auto mr-3"><i class="fas fa-file-excel"></i> Export in Excel</a>
+        </div>
+        <div class="card-body mt-2">
+            <div class="table-responsive">
+                <table class="table-custom" style="width: 100%;">
+                    <thead class="thead-custom">
+                        <tr>
+                            <td>#</td>
+                            <td>Nick Name</td>
+                            <td>Email address</td>
+                            <td>Status</td>
+                            <td>Operations</td>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody-custom">
+                        @foreach(UserAdminListViewModel item in Model)
+                        {
+                            <tr>
+                                <td class="my-table-data"><img class="small-img" src="~/WriterImageFiles/@item.UserImage" /></td>
+                                <td class="my-table-data">@item.UserName</td>
+                                <td><i class='bx bx-envelope'></i> @item.UserMail</td>
+                                <td id="table-data-@item.UserID">
+                                    @if (item.UserStatus)
+                                    {
+                                        <span class="status green"></span><span> Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status red"></span>
+                                        <a onclick="activateUser(@item.UserID)" class="btn btn-outline-success">Activate</a>
+                                    }
+                                </td>
+                                <td class="d-flex justify-content-between">
+                                    <button class="btn btn-dark" onclick="UserDetails(@item.UserID)"><i class="fas fa-eye"></i></button>
+                                    <a class="btn btn-dark" href="/AdminPanel/AdminUser/UserEdit/@item.UserID"><i class="fas fa-edit"></i></a>
+                                    <button type="button" onclick="delUser(@item.UserID)" class="btn btn-dark">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "AdminUser", new { page }), new PagedListRenderOptions
+{
+    PageClasses = new string[] { "page-link bg-dark text-light border-dark" },
+    LiElementClasses = new string[] { "page-item" },
+    DisplayLinkToLastPage = PagedListDisplayMode.Always,
+    DisplayLinkToFirstPage = PagedListDisplayMode.Always,
+    ContainerDivClasses = new string[] { "p-1 pt-3" },
+    ActiveLiElementClass = "active-page"
+})
+
+@section scripts {
+    <script>
+        function delUser(user_id) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger mr-3'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this User!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let timerInterval
+                    Swal.fire({
+                        title: 'Deleting...!',
+                        html: 'I will delete in <b></b> milliseconds.',
+                        timer: 1000,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/AdminPanel/AdminUser/DeleteUser/',
+                                data: { id: user_id }
+                            });
+                            Swal.showLoading()
+                            const b = Swal.getHtmlContainer().querySelector('b')
+                            timerInterval = setInterval(() => {
+                                b.textContent = Swal.getTimerLeft()
+                            }, 100)
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                    }).then((result) => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: 'This User has been deleted successfully!'
+                        });
+                        document.getElementById("table-data-" + user_id).innerHTML = `<span class="status red"></span>
+                                            <a onclick="activateUser(${user_id})" class="btn btn-outline-success">Activate</a>`;
+                    });
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'User is safe :)',
+                        'error'
+                    )
+                }
+            })
+        }
+
+        function activateUser(user_id) {
+            let timerInterval
+            Swal.fire({
+                title: 'Activating...!',
+                html: 'I will activate in <b></b> milliseconds.',
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/AdminPanel/AdminUser/ActivateUser/',
+                        data: { id: user_id }
+                    });
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Activated!',
+                    text: 'User has been activated successfully!'
+                });
+                document.getElementById("table-data-" + user_id).innerHTML = `<span class="status green"></span><span> Active</span>`;
+            });
+        }
+
+        function UserDetails(user_id) {
+            $(function () {
+                $.ajax({
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: '/AdminPanel/AdminUser/UserDetails/',
+                    data: { id: user_id },
+                    success: function (myvalue) {
+                        let data = jQuery.parseJSON(myvalue);
+                        Swal.fire({
+                            title: `<div class="text-center"><img class="detail-img" src="/WriterImageFiles/${data.UserImage}" /></div><hr /><span>Details of </span><strong class="text-info">${data.UserName}</strong>`,
+                            html:
+                                `<h4><b>${data.UserFirstName} ${data.UserLastName}</b></h4>
+                                    <h5><i class='bx bx-envelope'></i> <span class="text-info">${data.UserMail}</span></h5>
+                                    <h4> From : ${data.Country} </h4>
+                                    <br />
+                                    <h4 class="text-dark"><b>The Number of Blogs : ${data.BlogsCount}</b></h4>`,
+                            showCloseButton: true,
+                            showCancelButton: true,
+                            focusConfirm: false,
+                            confirmButtonText:
+                                '<a class="text-white nav-link p-0" href="#"><i class="fas fa-edit"></i> Edit User</a>',
+                            confirmButtonAriaLabel: 'Edit',
+                            cancelButtonText:
+                                '<span><i class="fas fa-arrow-circle-left" ></i> Okay</span>',
+                            cancelButtonAriaLabel: 'Okay'
+                        });
+                    }
+                })
+            });
+        }
+    </script>
+}

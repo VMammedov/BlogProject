@@ -28,9 +28,9 @@ namespace BusinessLayer.Concrete
             return _countryDal.GetListAll();
         }
 
-        public List<Country> GetListWithWriters()
+        public List<Country> GetListWithUsers()
         {
-            return _countryDal.GetListWithWriters();
+            return _countryDal.GetListWithUsers();
         }
 
         public void TAdd(Country obj)

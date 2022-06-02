@@ -1,4 +1,6 @@
 ﻿using BusinessLayer.Concrete;
+using BusinessLayer.Utilities;
+using BusinessLayer.ViewModels;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +13,6 @@ namespace BlogProject.Controllers.UIControllers
 {
     public class CommentController : Controller
     {
-
         CommentManager cm = new CommentManager(new EfCommentRepository());
 
         public IActionResult Index()
@@ -19,15 +20,21 @@ namespace BlogProject.Controllers.UIControllers
             return View();
         }
 
-        public PartialViewResult AddCommentPartial()
+        [HttpPost]
+        public IActionResult CommentPost(CommentPostViewModel comment)
         {
-            return PartialView();
-        }
-
-        public PartialViewResult CommentListByBlogPartial(int id)
-        {
-            List<Comment> comments = cm.GetList(id);
-            return PartialView(comments);
+            UserManagerBL um = new UserManagerBL(new EfUserRepository());
+            Comment CommentObj = new Comment()
+            {
+                BlogID = comment.blogid,
+                CommentContent = comment.content,
+                CommentDate = DateTime.Now,
+                CommentStatus = true,
+                UserID = FunctionHelper.GetUserIdByName(User.Identity.Name),
+            };
+            cm.TAdd(CommentObj);
+            string userimage = um.GetByID(CommentObj.UserID).UserImage;
+            return Json(userimage);
         }
     }
 }

@@ -3,13 +3,13 @@
         <div class="row">
             <div class="col-lg-4 footer-grid-agileits-w3ls text-left">
                 <h3>About US</h3>
-                <p>Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. lacinia eget consectetur sed, convallis at tellus..</p>
+                <p>The concept of the text is not a stable one. It is always changing as the technologies for publishing and disseminating texts evolve. In the past, texts were usually presented as printed matter in bound volumes such as pamphlets or books...</p>
                 <div class="read">
-                    <a href="single.html" class="btn btn-primary read-m">Read More</a>
+                    <a href="/About/Index" class="btn btn-primary read-m">Read More</a>
                 </div>
             </div>
             <div class="col-lg-4 footer-grid-agileits-w3ls text-left">
-                @await Component.InvokeAsync("LastBlogsOfWriter")
+                @await Component.InvokeAsync("LastBlogsOfUser")
             </div>
             <!-- subscribe -->
             <div class="col-lg-4 subscribe-main footer-grid-agileits-w3ls text-left">
@@ -17,8 +17,8 @@
                 <div class="subscribe-main text-left">
                     <div class="subscribe-form">
                         <form action="#" method="post" class="subscribe_form">
-                            <input class="form-control" type="email" placeholder="Enter your email..." required="">
-                            <button type="submit" class="btn btn-primary submit">Submit</button>
+                            <input class="form-control" type="email" id="nws-email" placeholder="Enter your email..." required="">
+                            <button type="button" id="btnsubmitfooter" class="btn btn-primary submit">Submit</button>
                         </form>
                         <div class="clearfix"> </div>
                     </div>
@@ -29,40 +29,9 @@
         </div>
         <!-- footer -->
         <div class="footer-cpy text-center">
-            <div class="footer-social">
-                <div class="copyrighttop">
-                    <ul>
-                        <li class="mx-3">
-                            <a class="facebook" href="#">
-                                <i class="fab fa-facebook-f"></i>
-                                <span>Facebook</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="facebook" href="#">
-                                <i class="fab fa-twitter"></i>
-                                <span>Twitter</span>
-                            </a>
-                        </li>
-                        <li class="mx-3">
-                            <a class="facebook" href="#">
-                                <i class="fab fa-google-plus-g"></i>
-                                <span>Google+</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="facebook" href="#">
-                                <i class="fab fa-pinterest-p"></i>
-                                <span>Pinterest</span>
-                            </a>
-                        </li>
-                    </ul>
-
-                </div>
-            </div>
             <div class="w3layouts-agile-copyrightbottom">
                 <p>
-                    © @DateTime.Now.Year Weblog. All Rights Reserved
+                    © @DateTime.Now.Year VMBlog. All Rights Reserved
                 </p>
 
             </div>
@@ -70,3 +39,17 @@
         <!-- //footer -->
     </div>
 </footer>
+
+<script>
+    $("#btnsubmitfooter").click(() => {
+        $.post("https://localhost:44356/newsletter/SubscribeMail", { a: $("#nws-email").val().toString() });
+    });
+
+    $("#btnsubmitfooter").click(() => {
+        Swal.fire(
+            'You have successfully subscribed!',
+            'Now, you will be able to receive instant news from new blogs on our site!',
+            'success'
+        );
+    });
+</script>

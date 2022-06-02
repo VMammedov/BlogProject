@@ -10,5 +10,6 @@ namespace BusinessLayer.Abstract
     public interface ICategoryService:IGenericService<Category>
     {
         public List<Category> GetCategoriesWithBlogs();
+        public Category GetCategoryWithBlogs(int id);
     }
 }

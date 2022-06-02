@@ -1,4 +1,4 @@
-﻿@model List<Blog>
+﻿@model Blog
 
 @{
     ViewData["Title"] = "BlogReadAll";
@@ -11,55 +11,54 @@
         <div class="row">
             <!--left-->
             <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
-                @foreach (var blog in Model)
-                {
-                    <div class="blog-grid-top">
-                        <div class="b-grid-top">
-                            <div class="blog_info_left_grid">
-                                <div>
-                                    <img src="@blog.BlogImage" class="img-fluid" alt="">
-                                </div>
-                            </div>
-                            <div class="blog-info-middle">
-                                <ul>
-                                    <li>
-                                        <a href="#">
-                                            <i class="far fa-calendar-alt"></i> @(((DateTime)blog.BlogCreateDate).ToString("dd-MMMM-yyyy"))
-                                        </a>
-                                    </li>
-                                    <li class="mx-2">
-                                        <a href="#">
-                                            <i class="far fa-thumbs-up"></i> 201 Likes
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#comments">
-                                            <i class="far fa-comment"></i> 15 Comments
-                                        </a>
-                                    </li>
-
-                                </ul>
+                <div class="blog-grid-top">
+                    <div class="b-grid-top">
+                        <div class="blog_info_left_grid">
+                            <div>
+                                <img src="@Model.BlogImage" class="blog-img">
                             </div>
                         </div>
-
-                        <h3>
-                            <a href="">@blog.BlogTitle</a>
-                        </h3>
-                        <p>
-                            @blog.BlogContent
-                        </p>
-                        <a href="single.html" class="btn btn-primary read-m">Read More</a>
+                        <div class="blog-info-middle">
+                            <ul>
+                                <li>
+                                    <a href="#">
+                                        <i class="far fa-calendar-alt"></i> @(((DateTime)Model.BlogCreateDate).ToString("dd-MMMM-yyyy"))
+                                    </a>
+                                </li>
+                                <li class="mx-2">
+                                    <a href="#">
+                                        <i class="far fa-thumbs-up"></i> @Model.BlogRating Likes
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#comments">
+                                        <i class="far fa-comment"></i> @Model.Comments.Count
+                                    </a>
+                                </li>
+                                <li class="ml-2">
+                                    <a href="#category">
+                                        <i class="far fa-list-alt"></i> @Model.Category.CategoryName
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                }
-                
-                <partial name="/Views/Comment/AddCommentPartial.cshtml"/>
 
-                @await Component.InvokeAsync("CommentListByBlog", new { id = ViewBag.id })
+                    <h3>
+                        <a href="">@Model.BlogTitle</a>
+                    </h3>
+                    <p>
+                        @Model.BlogContent
+                    </p>
+                </div>
+
+                <partial name="/Views/Comment/AddCommentPartial.cshtml" />
+
+                @await Component.InvokeAsync("CommentListByBlog", new { id = Model.BlogID })
                 
             </div>
-
+            
             <!--//left-->
-
             <!--right-->
 
             <partial name="RightSidePartial" />
@@ -69,3 +68,40 @@
     </div>
 </section>
 <!--//main-->
+@section scripts {
+    <script>
+    let textArea = document.getElementById("commentinfo");
+        function postComment() {
+            let data = textArea.value;
+            console.log(data);
+            $.ajax({
+                type: "POST",
+                url: "/Comment/CommentPost/",
+                data: { content: data, blogid: @Model.BlogID },
+                success: function (userimage) {
+                    let cont = document.querySelector("#comments");
+                    let empty_cont = document.getElementById("empty-comment-cont");
+                    if (empty_cont.style.display != "none")
+                        empty_cont.style.display = "none"
+                    cont.innerHTML += `<div class="media">
+                    <img src="~/WriterImageFiles/${userimage}" class="img-fluid" />
+                    <div class="media-body">
+                        <h5 class="mt-0">@User.Identity.Name</h5>
+                        <p>
+                            ${data}
+                        </p>
+                    </div>
+                    </div>`
+                },
+                error: function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Something went wrong!',
+                        footer: '<a href="">Why do I have this issue?</a>'
+                    })
+                }
+            });
+    };
+    </script>
+}

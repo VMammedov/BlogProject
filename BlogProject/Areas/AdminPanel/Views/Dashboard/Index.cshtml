@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-@await Component.InvokeAsync("Cards") 
+@await Component.InvokeAsync("Cards")
 
 <div class="pt-3">
     <div class="table-bg mt-4">
@@ -30,30 +30,30 @@
                         @for (int i = 0; i < Model.Count; i++)
                         {
                             <tr>
-                                <td>@(i+1)</td>
-                                <td>@Model[i].CategoryName</td>
+                                <td class="my-table-data">@Model[i].CategoryID</td>
+                                <td class="my-table-data">@Model[i].CategoryName</td>
                                 @if (Model[i].CategoryDescription.Length > 30)
                                 {
-                                    <td>@Model[i].CategoryDescription.Substring(0, 30)<span>...</span></td>
+                                    <td class="my-table-data">@Model[i].CategoryDescription.Substring(0, 30)<span>...</span></td>
                                 }
                                 else
                                 {
-                                    <td>@Model[i].CategoryDescription</td>
+                                    <td class="my-table-data">@Model[i].CategoryDescription</td>
                                 }
-                            <td>
-                                @if (Model[i].CategoryStatus)
-                                {
-                                    <span class="status green"></span>
-                                    <a class="btn btn-outline-danger">De Activate</a>
-                                }
-                                else
-                                {
-                                    <span class="status red"></span>
-                                    <a class="btn btn-outline-success">Activate</a>
-                                }
-                            </td>
+                                <td id="table-data-@Model[i].CategoryID">
+                                    @if (Model[i].CategoryStatus)
+                                    {
+                                        <span class="status green"></span>
+                                        <a onclick="delCategory(@Model[i].CategoryID)" class="btn btn-outline-danger">De Activate</a>
+                                    }
+                                    else
+                                    {
+                                        <span class="status red"></span>
+                                        <a onclick="activateCategory(@Model[i].CategoryID)" class="btn btn-outline-success">Activate</a>
+                                    }
+                                </td>
                                 <td class="d-flex justify-content-between">
-                                    <a class="btn btn-dark" href="#"><i class="fas fa-eye"></i></a>
+                                    <button class="btn btn-dark" onclick="CategoryDetails(@Model[i].CategoryID)"><i class="fas fa-eye"></i></button>
                                     <a class="btn btn-dark" href="#"><i class="fas fa-edit"></i></a>
                                     <button type="button" onclick="delCategory(@Model[i].CategoryID)" class="btn btn-dark">
                                         <i class="fas fa-trash"></i>
@@ -74,28 +74,137 @@
     LiElementClasses = new string[] { "page-item" },
     DisplayLinkToLastPage = PagedListDisplayMode.Always,
     DisplayLinkToFirstPage = PagedListDisplayMode.Always,
-    ContainerDivClasses = new string[] {"p-1 pt-3"},
+    ContainerDivClasses = new string[] { "p-1 pt-3" },
     ActiveLiElementClass = "active-page"
 })
 
-<script>
-    function delCategory(id) {
-        swal({
-            title: "Are you sure?",
-            text: "Once deleted, you'll not be able to recover this Category!",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        })
-            .then((willDelete) => {
-                if (willDelete) {
-                    swal("Poof! Your imaginary Category has been deleted!", {
-                        icon: "success",
+@section scripts {
+    <script>
+        function delCategory(category_id) {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger mr-3'
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this Category!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let timerInterval
+                    Swal.fire({
+                        title: 'Deleting...!',
+                        html: 'I will delete in <b></b> milliseconds.',
+                        timer: 1000,
+                        timerProgressBar: true,
+                        didOpen: () => {
+                            $.ajax({
+                                type: 'POST',
+                                url: '/AdminPanel/Category/DeleteCategory/',
+                                data: { id: category_id }
+                            });
+                            Swal.showLoading()
+                            const b = Swal.getHtmlContainer().querySelector('b')
+                            timerInterval = setInterval(() => {
+                                b.textContent = Swal.getTimerLeft()
+                            }, 100)
+                        },
+                        willClose: () => {
+                            clearInterval(timerInterval)
+                        }
+                    }).then((result) => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: 'Your Category has been deleted successfully!'
+                        });
+                        document.getElementById("table-data-" + category_id).innerHTML = `<span class="status red"></span>
+                                        <a onclick="activateCategory(${category_id})" class="btn btn-outline-success">Activate</a>`;
                     });
-                    window.location.href = '/AdminPanel/Category/DeleteCategory/' + id;
-                } else {
-                    swal("Your imaginary Category has not been deleted!");
+                } else if (
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {
+                    swalWithBootstrapButtons.fire(
+                        'Cancelled',
+                        'Your Category is safe :)',
+                        'error'
+                    )
                 }
+            })
+        }
+
+        function activateCategory(category_id) {
+            let timerInterval
+            Swal.fire({
+                title: 'Activating...!',
+                html: 'I will activate in <b></b> milliseconds.',
+                timer: 1000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/AdminPanel/Category/ActivateCategory/',
+                        data: { id: category_id }
+                    });
+                    Swal.showLoading()
+                    const b = Swal.getHtmlContainer().querySelector('b')
+                    timerInterval = setInterval(() => {
+                        b.textContent = Swal.getTimerLeft()
+                    }, 100)
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Activated!',
+                    text: 'Your Category has been activated successfully!'
+                });
+                document.getElementById("table-data-" + category_id).innerHTML = `<span class="status green"></span>
+                                        <a onclick="delCategory(${category_id})" class="btn btn-outline-danger">De Activate</a>`;
             });
-    }
-</script>
+        }
+
+        function CategoryDetails(category_id) {
+            $(function () {
+                $.ajax({
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: 'GET',
+                    url: '/AdminPanel/Category/CategoryDetails/',
+                    data: { id: category_id },
+                    success: function (myvalue) {
+                        let data = jQuery.parseJSON(myvalue);
+                        Swal.fire({
+                            title: `<span>Details of </span><strong class="text-info">${data.categoryname}</strong>`,
+                            icon: 'info',
+                            html:
+                                `<h4><b>Category Description</b></h4>
+                                <h5>${data.categorydescription}</h5>
+                                <br />
+                                <h4 class="text-dark"><b>The Number of Blogs : ${data.blogscount}</b></h4>`,
+                            showCloseButton: true,
+                            showCancelButton: true,
+                            focusConfirm: false,
+                            confirmButtonText:
+                                '<a class="text-white nav-link p-0" href="#"><i class="fas fa-edit"></i> Edit Category</a>',
+                            confirmButtonAriaLabel: 'Edit',
+                            cancelButtonText:
+                                '<span><i class="fas fa-arrow-circle-left" ></i> Cancel</span>',
+                            cancelButtonAriaLabel: 'Cancel'
+                        });
+                    }
+                })
+            });
+        }
+    </script>
+}

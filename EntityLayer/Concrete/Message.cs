@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,10 +12,10 @@ namespace EntityLayer.Concrete
     {
         [Key]
         public int MessageID { get; set; }
-        public int SenderID { get; set; }
-        public int? ReceiverID { get; set; }
-        public Writer Sender { get; set; }
-        public Writer Receiver { get; set; }
+        public int SenderId { get; set; }
+        public int? ReceiverId { get; set; }
+        public virtual AppUser Sender { get; set; }
+        public virtual AppUser Receiver { get; set; }
         public string Subject { get; set; }
         public string MessageContent { get; set; }
         public DateTime MessageDate { get; set; }

@@ -22,6 +22,7 @@
         }
     </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="icon" href="~/VMBlogLogoFavicon.png">
     <link href="~/Template/css/bootstrap.css" rel='stylesheet' type='text/css' />
     <link rel="stylesheet" href="~/Template/css/single.css">
     <link href="~/Template/css/style.css" rel='stylesheet' type='text/css' />
@@ -38,11 +39,11 @@
         <div class="top-bar_sub_w3layouts container-fluid">
             <div class="row">
                 <div class="col-md-4 logo text-left">
-                    <a class="navbar-brand" href="index.html">
-                        <i class="fab fa-linode"></i> Weblog
+                    <a class="navbar-brand" href="/Home/Index">
+                        <img src="~/VMBlogLogo.png" class="layout-logo" />
                     </a>
                 </div>
-                
+
                 <partial name="UserLayoutHeadPartial" />
 
                 <div class="col-md-4 log-icons text-right">
@@ -80,23 +81,14 @@
 
     </header>
     <!--//header-->
-    <!--/banner-->
-    <div class="banner-inner">
-    </div>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="index.html">Home</a>
-        </li>
-        <li class="breadcrumb-item active">Blog2</li>
-    </ol>
-    <!--//banner-->
+
     <!--/main-->
 
     @RenderBody()
-    
+
     <!--//main-->
     <!--footer-->
-    
+
     <partial name="UserLayoutFooterPartial" />
 
     <!---->
@@ -120,15 +112,6 @@
 
     <script>
         $(document).ready(function () {
-            /*
-                                    var defaults = {
-                                            containerID: 'toTop', // fading element id
-                                        containerHoverID: 'toTopHover', // fading element hover id
-                                        scrollSpeed: 1200,
-                                        easingType: 'linear'
-                                        };
-                                    */
-
             $().UItoTop({
                 easingType: 'easeOutQuart'
             });
@@ -142,7 +125,7 @@
     <!-- //Custom-JavaScript-File-Links -->
     <script src="~/Template/js/bootstrap.js"></script>
 
-
+    @await RenderSectionAsync("scripts", false)
 </body>
 
 </html>

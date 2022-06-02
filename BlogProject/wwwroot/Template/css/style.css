@@ -13,6 +13,25 @@ body {
 	background: #fff;
 }
 
+.blog-small-img {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border: 1px solid #01cd74;
+}
+
+.layout-logo{
+	width:180px;
+	height:50px;
+}
+.read-m {
+	color: #fff !important;
+}
+
+.read-m:hover {
+	color: #000 !important;
+}
+
 .white-card {
 	border-radius: 12px;
 	padding:12px;
@@ -53,15 +72,19 @@ body {
 }
 
 .custom-mail-nav-button{
-	color:white;
+	color:#000;
 }
 
 .bg-custom {
 	background-color: #01cd74;
 }
 
-.custom-mail-nav-button:focus, .custom-mail-nav-button:hover{
-	background:#fff;
+.custom-mail-nav-button:hover, .custom-mail-nav-button:focus {
+	background: #fff;
+}
+
+.custom-mail-nav-button:hover, .custom-mail-nav-button:hover span, .custom-mail-nav-button:focus span {
+	transition: all .4s ease-in;
 	color: #000;
 }
 
@@ -97,10 +120,6 @@ body a {
 	width: 300px;
 	height: 300px;
 	position: relative;
-}
-
-.profile-img {
-	position: absolute;
 }
 
 .camera-icon {
@@ -791,6 +810,12 @@ h4.sub-tittle {
 	margin-top: 2em;
 }
 
+.blog-img {
+	width: 100%;
+	height: 500px;
+	background-size: cover;
+}
+
 /*--//banner-bottom --*/
 .bottom-slider,.main-content-w3layouts-agileits {
     padding: 5em 0;
@@ -1406,7 +1431,7 @@ footer {
 	border-radius:0;
 }
 
-.subscribe-main button[type="submit"] {
+.subscribe-main button[type="button"] {
 	color: #0e0f10;
 	font-size: 15px;
 	font-weight: 600;
@@ -1425,7 +1450,7 @@ footer {
 	border-radius:0;
 }
 
-.subscribe-main button[type="submit"]:hover {
+.subscribe-main button[type="button"]:hover {
 	color: #fff;
 	background: #01cd74;
 }
@@ -1497,6 +1522,15 @@ a.facebook:hover {
 	border: none;
 	text-indent: 100%;
 	background: url(../images/top_up.png) no-repeat 0px 0px;
+}
+
+.comment-img {
+	width: 70px;
+	height: 70px;
+	border-radius: 50%;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
 }
 
 /*--// copyright-- */

@@ -21,7 +21,7 @@ namespace BusinessLayer.Concrete
 
         public Message GetByID(int id)
         {
-            return _messageDal.GetByIDWithWriters(id);
+            return _messageDal.GetByIDWithUser(id);
         }
 
         public List<Message> GetList()
@@ -29,14 +29,19 @@ namespace BusinessLayer.Concrete
             return _messageDal.GetListAll();
         }
 
-        public List<Message> GetInboxListByWriter(int id)
+        public List<Message> GetInboxListByUser(int id)
         {
-            return _messageDal.GetListAllWithWriter(x=>x.ReceiverID==id);
+            return _messageDal.GetListAllWithUser(x=>x.ReceiverId==id);
+        }
+
+        public List<Message> GetSentBoxListByUser(int id)
+        {
+            return _messageDal.GetListAllWithUser(x => x.SenderId == id);
         }
 
         public void TAdd(Message obj)
         {
-            throw new NotImplementedException();
+            _messageDal.Insert(obj);
         }
 
         public void TDelete(Message obj)

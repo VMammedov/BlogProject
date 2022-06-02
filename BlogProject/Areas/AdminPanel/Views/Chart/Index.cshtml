@@ -5,15 +5,14 @@
 
 <head>
     <script src="https://www.google.com/jsapi"></script>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 
 <h1>Analytics</h1>
-<div class="w-100 white-card bg-white m-0 p-0">
+<div class="w-100 white-card bg-white m-0 p-2">
     <div class="chart" id="myCategoryChart">
     </div>
-    <div class="chart" id="myWritersByCountryChart">
+    <div class="chart" id="myUsersByCountryChart">
     </div>
 </div>
 
@@ -55,35 +54,35 @@
         }
 
         google.charts.load('current', { 'packages': ['corechart'] });
-        google.charts.setOnLoadCallback(drawChartWritersByCountry);
+        google.charts.setOnLoadCallback(drawChartUsersByCountry);
 
-        function drawChartWritersByCountry() {
+        function drawChartUsersByCountry() {
             $(function () {
                 $.ajax({
                     type: 'GET',
-                    url: '/AdminPanel/AdminWriter/WritersByCountry/',
+                    url: '/AdminPanel/AdminUser/UsersByCountry/',
                     success: function (chartsdata) {
-                        var writerData = chartsdata.writersjson;
+                        var userData = chartsdata.usersjson;
                         var data = new google.visualization.DataTable();
                         data.addColumn('string', 'Country');
-                        data.addColumn('number', 'Writers');
-                        $.each(writerData, function (i, writerData) {
-                            var country = writerData.writercountry;
-                            var wbyc_count = writerData.writerscountbycountry;
+                        data.addColumn('number', 'Users');
+                        $.each(userData, function (i, userData) {
+                            var country = userData.usercountry;
+                            var wbyc_count = userData.userscountbycountry;
                             data.addRows([[country, wbyc_count]]);
                         });
                         var options = {
-                            title: "The number of Writers by Country",
+                            title: "The number of Users by Country",
                             hAxis: {
                                 title: "Countries"
                             },
                             vAxis: {
-                                title: 'The Number of Writers',
+                                title: 'The Number of Users',
                                 height: 330
                             }
                         };
 
-                        var chart = new google.visualization.ColumnChart(document.getElementById('myWritersByCountryChart'));
+                        var chart = new google.visualization.ColumnChart(document.getElementById('myUsersByCountryChart'));
                         chart.draw(data, options);
                     }
                 });
@@ -92,7 +91,7 @@
 
         $(window).resize(function () {
             drawChartCategory();
-            drawChartWritersByCountry();
+            drawChartUsersByCountry();
         });
     </script>
 }

@@ -1,0 +1,60 @@
+﻿@model SecurityCodeViewModel
+
+@{
+    ViewData["Title"] = "VerifyPage";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<link href="~/css/ActivateStyle.css" rel="stylesheet" />
+
+<div class="custom-body">
+    <div class="container-custom">
+        <h2>Verify Your Account</h2>
+        <p>We emailed you the six digit code to @TempData["email"] <br /> Enter the code below to confirm your email address.</p>
+        <form action="/RegisterUser/ActivateUser" method="post">
+            <div class="code-container">
+                <input type="number" class="code" placeholder="0" asp-for="Number1" min="0" max="9" required>
+                <input type="number" class="code" placeholder="0" asp-for="Number2" min="0" max="9" required>
+                <input type="number" class="code" placeholder="0" asp-for="Number3" min="0" max="9" required>
+                <input type="number" class="code" placeholder="0" asp-for="Number4" min="0" max="9" required>
+                <input type="number" class="code" placeholder="0" asp-for="Number5" min="0" max="9" required>
+                <input type="number" class="code" placeholder="0" asp-for="Number6" min="0" max="9" required>
+                <input type="hidden" asp-for="Number" value="@Model.Number" />
+                <input type="hidden" asp-for="Email" value="@Model.Email" />
+            </div>
+            <button class="btn btn-success mb-3">Submit</button>
+        </form>
+        @if (TempData["Error"] == null)
+        {
+            <small class="info">
+                If Security Code will be valid you will redirected to Login Page!
+            </small>
+        }
+        else
+        {
+            <small class="info" style="color:red">
+                @TempData["Error"];
+            </small>
+        }
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        const codes = document.querySelectorAll('.code')
+
+        codes[0].focus()
+
+        codes.forEach((code, idx) => {
+            code.addEventListener('keydown', (e) => {
+                if (e.key >= 0 && e.key <= 9) {
+                    codes[idx].value = ''
+                    setTimeout(() => codes[idx + 1].focus(), 10)
+                } else if (e.key === 'Backspace') {
+                    setTimeout(() => codes[idx - 1].focus(), 10)
+                }
+            })
+        })
+    </script>
+}
+

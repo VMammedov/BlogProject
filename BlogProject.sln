@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogProject", "BlogProject\BlogProject.csproj", "{24C52727-63F1-4301-A885-4617AC9162F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogProject", "BlogProject\BlogProject.csproj", "{24C52727-63F1-4301-A885-4617AC9162F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityLayer", "EntityLayer\EntityLayer.csproj", "{413AE35C-6E42-4709-B28C-EE0646701FB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityLayer", "EntityLayer\EntityLayer.csproj", "{413AE35C-6E42-4709-B28C-EE0646701FB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{AD3F8B02-F96D-416A-824B-3B1D52CDF9D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessLayer", "DataAccessLayer\DataAccessLayer.csproj", "{AD3F8B02-F96D-416A-824B-3B1D52CDF9D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{790FA96B-9B14-4F3D-8ED3-7676E5F161FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{790FA96B-9B14-4F3D-8ED3-7676E5F161FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreLayer", "CoreLayer\CoreLayer.csproj", "{D349DEF6-8948-44BD-989A-EC67BC66B7C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreLayer", "CoreLayer\CoreLayer.csproj", "{D349DEF6-8948-44BD-989A-EC67BC66B7C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogWebAPI", "BlogWebAPI\BlogWebAPI.csproj", "{C71801FE-E39C-42E7-9032-3C0F93BF2A8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{D349DEF6-8948-44BD-989A-EC67BC66B7C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D349DEF6-8948-44BD-989A-EC67BC66B7C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D349DEF6-8948-44BD-989A-EC67BC66B7C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C71801FE-E39C-42E7-9032-3C0F93BF2A8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C71801FE-E39C-42E7-9032-3C0F93BF2A8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C71801FE-E39C-42E7-9032-3C0F93BF2A8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C71801FE-E39C-42E7-9032-3C0F93BF2A8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

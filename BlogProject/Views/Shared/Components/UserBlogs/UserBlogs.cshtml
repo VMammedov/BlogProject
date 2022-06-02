@@ -1,0 +1,59 @@
+﻿@model List<Blog>
+
+@{
+    ViewData["Title"] = "UserBlogs";
+    Layout = null;
+}
+
+<div class="p-3">
+    <div class="table-bg mt-4">
+        <div class="card-header-custom">
+            <h3>Recent Blogs</h3>
+            <a href="/Blog/BlogAdd" class="btn btn-primary read-m">New Blog <span class="fas fa-arrow-right"></span></a>
+        </div>
+        <div class="card-body mt-2">
+            <div class="table-responsive">
+                <table class="table-custom" style="width: 100%;">
+                    <thead class="thead-custom">
+                        <tr>
+                            <td>Image</td>
+                            <td>Title</td>
+                            <td>Category</td>
+                            <td>Date</td>
+                            <td>Status</td>
+                            <td>Operations</td>
+                        </tr>
+                    </thead>
+                    <tbody class="tbody-custom">
+                        @foreach (Blog item in Model)
+                        {
+                            <tr>
+                                <td><img class="blog-small-img" src="@item.BlogImage" /></td>
+                                <td><a href="#" style="color: #00b868">@item.BlogTitle</a></td>
+                                <td>@item.Category.CategoryName</td>
+                                <td>@item.BlogCreateDate.ToString("ddd-MM-yyyy")</td>
+                                <td>
+                                    @if (item.BlogStatus)
+                                    {
+                                        <span class="status green"></span>
+                                        <span>Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status red"></span>
+                                        <span>DeActive</span>
+                                    }
+                                </td>
+                                <td class="d-flex justify-content-between">
+                                    <a class="btn btn-secondary" href="/Blog/BlogReadAll/@item.BlogID"><i class="fas fa-eye"></i></a>
+                                    <a class="btn btn-warning" href="/Blog/BlogEdit/@item.BlogID"><i class="fas fa-edit"></i></a>
+                                    <a class="btn btn-danger" href="/Blog/BlogDelete/@item.BlogID"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

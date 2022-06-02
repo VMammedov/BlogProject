@@ -5,6 +5,7 @@ using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,10 +42,20 @@ namespace BlogProject.Areas.AdminPanel.Controllers
                 return View();
         }
 
+        [HttpPost]
         public IActionResult DeleteCategory(int id)
         {
             Category category = cm.GetByID(id);
             category.CategoryStatus = false;
+            cm.TUpdate(category);
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        [HttpPost]
+        public IActionResult ActivateCategory(int id)
+        {
+            Category category = cm.GetByID(id);
+            category.CategoryStatus = true;
             cm.TUpdate(category);
             return RedirectToAction("Index", "Dashboard");
         }
@@ -65,6 +76,20 @@ namespace BlogProject.Areas.AdminPanel.Controllers
             }
 
             return Json(new { jsonlist = chartCategories });
+        }
+
+        public IActionResult CategoryDetails(int id)
+        {
+            Category category = cm.GetCategoryWithBlogs(id);
+            CategoryInfo CategoryInfo = new CategoryInfo
+            {
+                categoryname = category.CategoryName,
+                categorydescription = category.CategoryDescription,
+                blogscount = category.Blogs.Count
+            };
+
+            string value = JsonConvert.SerializeObject(CategoryInfo);
+            return Json(value);
         }
     }
 }

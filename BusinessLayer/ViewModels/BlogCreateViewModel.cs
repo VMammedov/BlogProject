@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,10 @@ namespace BusinessLayer.ViewModels
         public int BlogID { get; set; }
         public string BlogTitle { get; set; }
         public string BlogContent { get; set; }
-        public string BlogThumbnailImage { get; set; }
-        public string BlogImage { get; set; }
+        public IFormFile BlogThumbnailImage { get; set; }
+        public IFormFile BlogImage { get; set; }
+        public string BlogThumbnailImagePath { get; set; }
+        public string BlogImagePath { get; set; }
         public int CategoryID { get; set; }
     }
 }

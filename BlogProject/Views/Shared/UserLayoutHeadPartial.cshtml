@@ -1,13 +1,19 @@
 ﻿<div class="col-md-4 top-forms text-center mt-lg-3 mt-md-1 mt-0">
-    <span>Welcome Back VMammedov!</span>
-    <span class="mx-lg-4 mx-md-2  mx-1">
-        <a href="/Login/Index">
-            <i class="fas fa-lock"></i> Sign In
-        </a>
-    </span>
-    <span>
-        <a href="/Register/Index">
-            <i class="far fa-user"></i> Register
-        </a>
-    </span>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <span>Welcome Back @User.Identity.Name!</span>
+    }
+    else
+    {
+        <span class="mx-lg-4 mx-md-2  mx-1">
+            <a href="/Login/Index">
+                <i class="fas fa-lock"></i> Sign In
+            </a>
+        </span>
+        <span>
+            <a href="/RegisterUser/Index">
+                <i class="far fa-user"></i> Register
+            </a>
+        </span>
+    }
 </div>

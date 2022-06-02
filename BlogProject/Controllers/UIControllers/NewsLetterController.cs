@@ -2,6 +2,7 @@
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using System;
@@ -10,7 +11,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlogProject.Controllers.UIControllers
-{
+{ 
+    [AllowAnonymous]
     public class NewsLetterController : Controller
     {
 
@@ -24,7 +26,6 @@ namespace BlogProject.Controllers.UIControllers
         [HttpPost]
         public PartialViewResult SubscribeMail(string a)
         {
-            //TODO : Subscribe newsletter with ajax query
             NewsLetter newsLetter = new NewsLetter();
             newsLetter.Mail = a;
             newsLetter.MailStatus = true;
@@ -35,7 +36,7 @@ namespace BlogProject.Controllers.UIControllers
             message.Subject = "Test Message";
             message.Body = new TextPart("plain")
             {
-                Text = "Hellow World!"
+                Text = "Hi dear User, Welcome to our VMBlog family!"
             };
 
             using(var client = new SmtpClient())

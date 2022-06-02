@@ -14,17 +14,17 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EfMessageRepository : GenericRepository<Message>, IMessageDal
     {
-        public List<Message> GetListAllWithWriter(Expression<Func<Message, bool>> filter = null)
+        public List<Message> GetListAllWithUser(Expression<Func<Message, bool>> filter = null)
         {
             using (Context context = new Context())
             {
                 return filter == null
-                        ? context.Messages.Include(x => x.Sender).ToList()
-                        : context.Messages.Where(filter).Include(x => x.Sender).ToList();
+                        ? context.Messages.Include(x => x.Sender).Include(y=>y.Receiver).ToList()
+                        : context.Messages.Where(filter).Include(x => x.Sender).Include(y => y.Receiver).ToList();
             }
         }
 
-        public Message GetByIDWithWriters(int id)
+        public Message GetByIDWithUser(int id)
         {
             using (Context context = new Context())
             {

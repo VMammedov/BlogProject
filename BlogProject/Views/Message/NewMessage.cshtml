@@ -1,0 +1,51 @@
+﻿@model NewMessageViewModel
+
+@{
+    ViewData["Title"] = "NewMessage";
+    Layout = "~/Views/Shared/_WriterPanelLayout.cshtml";
+}
+
+<head>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/33.0.0/classic/ckeditor.js"></script>
+</head>
+
+<div class="container p-4">
+    <div class="bg-light white-card">
+        <div class="text-center p-3">
+            <h2><i class="fas fa-envelope-open"></i> Write Your Message</h2>
+        </div>
+        <form class="p-4" action="/Message/NewMessage" method="post">
+            <div class="p-3">
+                <label for="rmail">Reciever Mail</label>
+                <span class="text-danger font-weight-bold ml-2" asp-validation-for="RecieverMail"></span>
+                <input id="rmail" class="form-control" type="email" asp-for="RecieverMail" placeholder="Reciever mail..." />
+            </div>
+            <div class="p-3">
+                <label for="sbj">Subject</label>
+                <span class="text-danger font-weight-bold ml-2" asp-validation-for="Subject"></span>
+                <input id="sbj" class="form-control" type="text" asp-for="Subject" placeholder="Subject..." />
+            </div>
+            <div class="p-3">
+                <label for="editor">Message</label>
+                <span class="text-danger font-weight-bold ml-2" asp-validation-for="MessageContent"></span>
+                <textarea asp-for="MessageContent" id="editor" placeholder="Your Message..."></textarea>
+            </div>
+            <div class="text-center p-3">
+                <button type="submit" class="custom-button">Send</button>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .catch(error => {
+            console.error(error);
+        });
+</script>

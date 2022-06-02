@@ -1,4 +1,4 @@
-﻿@model List<Blog>
+﻿@model List<BlogListViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,11 +12,11 @@
             <!--left-->
             <div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
                 <div class="row mb-4">
-                    @foreach (Blog blog in Model)
+                    @foreach(BlogListViewModel blog in Model)
                     {
                         <div class="col-md-6 card">
                             <a href="/Blog/BlogReadAll/@blog.BlogID">
-                                <img src="@blog.BlogImage" class="card-img-top img-fluid" alt="">
+                                <img src="@blog.BlogThumbnailImage" class="card-img-top img-fluid" alt="">
                             </a>
                             <div class="card-body">
                                 <ul class="blog-icons my-4">
@@ -27,12 +27,12 @@
                                     </li>
                                     <li class="mx-2">
                                         <a href="#">
-                                            <i class="far fa-comment"></i> 21
+                                            <i class="far fa-comment"></i> @blog.CommentsCount
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <i class="fas fa-list-alt"></i> @blog.Category.CategoryName
+                                            <i class="fas fa-list-alt"></i> @blog.Category
                                         </a>
                                     </li>
 
@@ -40,44 +40,23 @@
                                 <h5 class="card-title ">
                                     <a href="/Blog/BlogReadAll/@blog.BlogID">@blog.BlogTitle</a>
                                 </h5>
-                                @if (blog.BlogContent.Length > 130)
+                                @if (blog.BlogContent.Length > 100)
                                 {
-                                    <p class="card-text mb-3">@blog.BlogContent.Substring(0, blog.BlogContent.Substring(0, 130).LastIndexOf(" "))...</p>
+                                    <p class="card-text mb-3">@blog.BlogContent.Substring(0, blog.BlogContent.Substring(0, 100).LastIndexOf(" "))...</p>
                                 }
                                 else
                                 {
-                                    <p class="card-text mb-3">@blog.BlogContent ...</p>
+                                    <p class="card-text mb-3">@blog.BlogContent</p>
                                 }
                                 <a href="/Blog/BlogReadAll/@blog.BlogID" class="btn btn-primary read-m">Read More</a>
                             </div>
                         </div>
                     }
                 </div>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-left mt-4">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
             </div>
             <!--//left-->
             <!--right-->
-            
             <partial name="RightSidePartial" />
-
             <!--//right-->
         </div>
     </div>

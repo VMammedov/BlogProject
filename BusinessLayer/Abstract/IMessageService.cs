@@ -9,6 +9,7 @@ namespace BusinessLayer.Abstract
 {
     public interface IMessageService : IGenericService<Message>
     {
-        public List<Message> GetInboxListByWriter(int id);
+        public List<Message> GetInboxListByUser(int id);
+        public List<Message> GetSentBoxListByUser(int id);
     }
 }

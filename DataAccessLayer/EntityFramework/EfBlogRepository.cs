@@ -14,13 +14,21 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EfBlogRepository : GenericRepository<Blog>, IBlogDal
     {
-        public List<Blog> GetListWithCategory(Expression<Func<Blog, bool>> filter = null)
+        public List<Blog> GetListWithEntities(Expression<Func<Blog, bool>> filter = null)
         {
             using (Context context = new Context())
             {
                 return filter == null
-                        ? context.Blogs.Include(x => x.Category).Include(x => x.Writer).ToList()
-                        : context.Blogs.Where(filter).Include(x => x.Category).Include(x => x.Writer).ToList();
+                        ? context.Blogs.Include(x => x.Category).Include(x => x.User).Include(x=>x.Comments).ToList()
+                        : context.Blogs.Where(filter).Include(x => x.Category).Include(x => x.User).Include(x => x.Comments).ToList();
+            }
+        }
+
+        public Blog GetBlogByIdWithEntities(int id)
+        {
+            using (Context context = new Context())
+            {
+                return context.Blogs.Where(e=>e.BlogID==id).Include(x => x.Category).Include(x => x.User).Include(x => x.Comments).FirstOrDefault();
             }
         }
     }

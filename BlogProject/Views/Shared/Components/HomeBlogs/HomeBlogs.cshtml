@@ -1,0 +1,87 @@
+﻿@model List<BlogListViewModel> 
+
+<div class="col-lg-8 left-blog-info-w3layouts-agileits text-left">
+    <div class="blog-grid-top">
+        <div class="b-grid-top">
+            <div class="blog_info_left_grid">
+                <a href="/Blog/BlogReadAll/@Model[0].BlogID">
+                    <img src="@Model[0].BlogThumbnailImage" class="blog-img">
+                </a>
+            </div>
+            <div class="blog-info-middle">
+                <ul>
+                    <li>
+                        <a href="#">
+                            <i class="far fa-calendar-alt"></i> @Model[0].BlogCreateDate.ToShortDateString()
+                        </a>
+                    </li>
+                    <li class="mx-2">
+                        <a href="#">
+                            <i class="far fa-thumbs-up"></i> @Model[0].BlogRating Likes
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="far fa-comment"></i> @Model[0].CommentsCount Comments
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <h3>
+            <a href="/Blog/BlogReadAll/@Model[0].BlogID">Amet consectetur adipisicing </a>
+        </h3>
+        <p>
+            @if (Model[0].BlogContent.Length > 150)
+            { @Model[0].BlogContent.Substring(0, 150) <span>...</span> }
+            else
+            { @Model[0].BlogContent }
+        </p>
+        <a href="/Blog/BlogReadAll/@Model[0].BlogID" class="btn btn-primary read-m">Read More</a>
+    </div>
+
+    <div class="blog-girds-sec">
+        <div class="row">
+            @for (int i = 1; i < Model.Count; i++)
+            {
+                <div class="col-md-6 blog-grid-top">
+                    <div class="b-grid-top">
+                        <div class="blog_info_left_grid">
+                            <a href="/Blog/BlogReadAll/@Model[i].BlogID">
+                                <img src="@Model[i].BlogThumbnailImage" class="img-fluid">
+                            </a>
+                        </div>
+                        <h3>
+                            <a href="/Blog/BlogReadAll/@Model[i].BlogID">Amet consectetur </a>
+                        </h3>
+                        <p>
+                            @if (Model[i].BlogContent.Length > 50)
+                            {@Model[i].BlogContent.Substring(0, 50) <span>...</span> }
+                            else
+                            { @Model[i].BlogContent}
+                        </p>
+                    </div>
+                    <ul class="blog-icons">
+                        <li>
+                            <a href="#">
+                                <i class="far fa-clock"></i> @Model[i].BlogCreateDate.ToShortDateString()
+                            </a>
+                        </li>
+                        <li class="mx-2">
+                            <a href="#">
+                                <i class="far fa-comment"></i> @Model[i].CommentsCount
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="far fa-thumbs-up"></i> @Model[i].BlogRating
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</div>
