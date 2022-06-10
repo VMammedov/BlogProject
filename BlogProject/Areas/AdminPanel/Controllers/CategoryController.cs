@@ -42,6 +42,33 @@ namespace BlogProject.Areas.AdminPanel.Controllers
                 return View();
         }
 
+        public IActionResult EditCategory(int id)
+        {
+            Category category = cm.GetByID(id);
+            CategoryAddEditViewModel viewcategory = new CategoryAddEditViewModel
+            {
+                CategoryID = category.CategoryID,
+                CategoryName = category.CategoryName,
+                CategoryDescription = category.CategoryDescription
+            };
+            return View(viewcategory);
+        }
+
+        [HttpPost]
+        public IActionResult EditCategory(CategoryAddEditViewModel viewcategory)
+        {
+            if (ModelState.IsValid)
+            {
+                Category category = cm.GetByID(viewcategory.CategoryID);
+                category.CategoryName = viewcategory.CategoryName;
+                category.CategoryDescription = viewcategory.CategoryDescription;
+                cm.TUpdate(category);
+                return RedirectToAction("Index", "Dashboard");
+            }
+            else
+                return View(viewcategory);
+        }
+
         [HttpPost]
         public IActionResult DeleteCategory(int id)
         {

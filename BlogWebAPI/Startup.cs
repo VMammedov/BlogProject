@@ -28,9 +28,19 @@ namespace BlogWebAPI
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerDocument(config =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BlogWebAPI", Version = "v1" });
+                config.PostProcess = (doc =>
+                {
+                    doc.Info.Title = "VMBlog Web API";
+                    doc.Info.Version = "2.0.1";
+                    doc.Info.Contact = new NSwag.OpenApiContact()
+                    {
+                        Name = "Vusal Mammadli",
+                        Email = "vusal.memmedli25@gmail.com",
+                        Url = "https://vmammedov.github.io"
+                    };
+                });
             });
         }
 
@@ -40,8 +50,6 @@ namespace BlogWebAPI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BlogWebAPI v1"));
             }
 
             app.UseHttpsRedirection();
@@ -49,6 +57,9 @@ namespace BlogWebAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseEndpoints(endpoints =>
             {

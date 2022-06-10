@@ -29,7 +29,7 @@ namespace BusinessLayer.Utilities
             string location = Path.Combine("C:\\Users\\vusal\\source\\repos\\BlogProject\\BlogProject\\wwwroot\\Template/images/", fileName);
             FileStream stream = new FileStream(location, FileMode.Create);
             file.CopyTo(stream);
-            return ("~/Template/images/"+fileName);
+            return ("/Template/images/"+fileName);
         }
 
         public static int GetUserIdByName(string UserName)

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BlogWebAPI</name>
+    </assembly>
+    <members>
+        <member name="M:BlogWebAPI.Controllers.BlogsController.Get">
+            <summary>
+            Get All Blogs
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BlogWebAPI.Controllers.BlogsController.Get(System.String)">
+            <summary>
+            Get a Blog By Id
+            </summary>
+            <param name="id"></param>
+        </member>
+        <member name="M:BlogWebAPI.Controllers.CommentsController.Get(System.Int32)">
+            <summary>
+            Get Comments By Blog Id
+            </summary>
+            <param name="id"></param>
+        </member>
+    </members>
+</doc>

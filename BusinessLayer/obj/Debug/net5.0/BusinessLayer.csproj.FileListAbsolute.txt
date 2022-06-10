@@ -31,4 +31,3 @@ C:\Users\vusal\source\repos\BlogProject\BusinessLayer\obj\Debug\net5.0\BusinessL
 C:\Users\vusal\source\repos\BlogProject\BusinessLayer\obj\Debug\net5.0\BusinessLayer.dll
 C:\Users\vusal\source\repos\BlogProject\BusinessLayer\obj\Debug\net5.0\ref\BusinessLayer.dll
 C:\Users\vusal\source\repos\BlogProject\BusinessLayer\obj\Debug\net5.0\BusinessLayer.pdb
-C:\Users\vusal\source\repos\BlogProject\BusinessLayer\obj\Debug\net5.0\BusinessLayer.csproj.CopyComplete

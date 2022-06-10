@@ -377,3 +377,4 @@ C:\Users\vusal\source\repos\BlogProject\BlogProject\obj\Debug\net5.0\Razor\Views
 C:\Users\vusal\source\repos\BlogProject\BlogProject\obj\Debug\net5.0\Razor\Views\RegisterUser\SuccessfullActivation.cshtml.g.cs
 C:\Users\vusal\source\repos\BlogProject\BlogProject\obj\Debug\net5.0\Razor\Views\Shared\Components\HomeBlogs\HomeBlogs.cshtml.g.cs
 C:\Users\vusal\source\repos\BlogProject\BlogProject\obj\Debug\net5.0\Razor\Views\Shared\Components\RecentBlog\RecentBlog.cshtml.g.cs
+C:\Users\vusal\source\repos\BlogProject\BlogProject\obj\Debug\net5.0\Razor\Areas\AdminPanel\Views\Category\EditCategory.cshtml.g.cs
