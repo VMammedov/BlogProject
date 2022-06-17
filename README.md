@@ -1,5 +1,5 @@
 # BlogProject
-This is my VMBlog web project for my Algorithmics course. On this site, users can blog, read, comment and message with others. From the Admin Panel section, users can easily manage many components of the site, including. It is possible to reply to individual e-mails in response to users' messages. In addition, the site has an API for the React site.
+This is my VMBlog web project for my Algorithmics course. On this site, users can blog, read, comment and message with others. From the Admin Panel section, users can easily manage many components of the site, including. It is possible to reply to individual e-mails in response to users' messages. In addition, the site has an API for the React site. YouTube video link of Project -> https://www.youtube.com/watch?v=j3Bo4jQ61Ag
 
 MAIN PAGE
 
